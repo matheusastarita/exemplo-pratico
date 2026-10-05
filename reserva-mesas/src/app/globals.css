@@ -19,7 +19,7 @@
   --c-stone-200: 228 223 215;
   --c-stone-300: 212 206 197;
   --c-stone-400: 163 156 147;
-  --c-stone-500: 116 109 101;
+  --c-stone-500: 105 98 91; /* texto secundário: ≥ 4.9:1 em creme, branco e fundos de status */
   --c-stone-600: 87 81 75;
   --c-stone-700: 68 63 58;
   --c-stone-800: 45 41 37;
@@ -61,7 +61,7 @@
   --c-status-completed-bg: 236 240 245;
   --c-status-no-show: 185 28 28;
   --c-status-no-show-bg: 254 236 236;
-  --c-status-cancelled: 116 109 101;
+  --c-status-cancelled: 99 92 85;
   --c-status-cancelled-bg: 241 237 230;
   --c-status-late: 194 65 12;
   --c-status-late-bg: 255 237 213;

@@ -150,31 +150,33 @@ export function TablesEditor({ initialAreas, initialTables }: { initialAreas: Ar
       />
 
       {/* Áreas */}
-      <div className="-mt-2 flex flex-wrap items-center gap-2" role="tablist" aria-label="Áreas">
-        {areas.map((a) => {
-          const active = a.id === areaId;
-          return (
-            <button
-              key={a.id}
-              type="button"
-              role="tab"
-              aria-selected={active}
-              onClick={() => {
-                setAreaId(a.id);
-                setSelectedId(null);
-              }}
-              className={`flex min-h-tap items-center gap-2 rounded-full px-4 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 ${
-                active ? "bg-brand text-brand-contrast" : "border border-stone-200 bg-white text-stone-700 hover:bg-stone-50"
-              } ${a.active ? "" : "opacity-70"}`}
-            >
-              {a.name}
-              <span className={`rounded-full px-1.5 text-xs ${active ? "bg-white/20" : "bg-stone-100 text-stone-600"}`}>
-                {tables.filter((t) => t.area_id === a.id && t.active).length}
-              </span>
-              {!a.active && <span className="text-xs">(fechada)</span>}
-            </button>
-          );
-        })}
+      <div className="-mt-2 flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Áreas">
+          {areas.map((a) => {
+            const active = a.id === areaId;
+            return (
+              <button
+                key={a.id}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                onClick={() => {
+                  setAreaId(a.id);
+                  setSelectedId(null);
+                }}
+                className={`flex min-h-tap items-center gap-2 rounded-full px-4 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 ${
+                  active ? "bg-brand text-brand-contrast" : "border border-stone-200 bg-white text-stone-700 hover:bg-stone-50"
+                } ${a.active ? "" : "opacity-70"}`}
+              >
+                {a.name}
+                <span className={`rounded-full px-1.5 text-xs ${active ? "bg-white/20" : "bg-stone-100 text-stone-600"}`}>
+                  {tables.filter((t) => t.area_id === a.id && t.active).length}
+                </span>
+                {!a.active && <span className="text-xs">(fechada)</span>}
+              </button>
+            );
+          })}
+        </div>
         <Button variant="ghost" size="sm" onClick={() => setAreaDialog("new")}>
           <PlusIcon size={16} /> Nova área
         </Button>

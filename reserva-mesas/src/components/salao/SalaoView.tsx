@@ -80,6 +80,12 @@ export function SalaoView({ initial, today }: { initial: HostDay; today: string 
   const day = state.day;
   const isToday = state.date === today;
 
+  // Reservas já conhecidas do dia na tela: o que aparecer de novo pelo site vira aviso
+  const knownRef = useRef<{ date: string; ids: Set<string> } | null>(null);
+  useEffect(() => {
+    knownRef.current = { date: state.date, ids: new Set(state.day.reservations.map((r) => r.id)) };
+  }, [state]);
+
   const refetch = useCallback(
     async (d: string) => {
       const { data, error } = await supabase.rpc("host_day", { p_date: d });
@@ -87,6 +93,25 @@ export function SalaoView({ initial, today }: { initial: HostDay; today: string 
       if (error || !data) {
         setState((s) => ({ ...s, date: d, error: friendlyErrorMessage(error, STAFF_ERROR_MESSAGES) }));
         return;
+      }
+      const known = knownRef.current;
+      if (known && known.date === d) {
+        const fresh = data.reservations.filter((r) => !known.ids.has(r.id) && r.source === "site" && r.status !== "cancelled");
+        const last = fresh[fresh.length - 1];
+        if (last) {
+          // "Ver" filtra a linha do tempo pelo código: o cartão aparece mesmo num grupo recolhido
+          setToast({
+            id: Date.now(),
+            message: `Nova reserva pelo site: ${firstName(last.customer.full_name)} · ${last.start_time} · ${peopleLabel(last.party_size)}`,
+            tone: "success",
+            actionLabel: "Ver",
+            onAction: () => {
+              setQuery(last.code);
+              setTab("linha");
+              setLeftTab("linha");
+            },
+          });
+        }
       }
       setState({ date: d, day: data, error: null });
       setNow(Date.now());
@@ -404,7 +429,11 @@ export function SalaoView({ initial, today }: { initial: HostDay; today: string 
       <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
         <div className="min-w-0">
           <p className="flex items-center gap-2 text-sm text-stone-500">
-            {shift ? `${shift.name} · ${shift.open_time}–${shift.close_time}` : "Sem turno neste dia"}
+            {shift
+              ? `${isToday && shift.open_time > nowTimeHHMM() ? "Próximo: " : ""}${shift.name} · ${shift.open_time}–${shift.close_time}`
+              : isToday && day.shifts.length > 0
+                ? "Turnos de hoje encerrados"
+                : "Sem turno neste dia"}
             {isToday && (
               <span className={`inline-flex items-center gap-1 text-xs font-medium ${live ? "text-status-confirmed" : "text-stone-400"}`}>
                 <span className={`h-2 w-2 rounded-full ${live ? "animate-pulse bg-status-confirmed" : "bg-stone-300"}`} aria-hidden="true" />
@@ -442,7 +471,10 @@ export function SalaoView({ initial, today }: { initial: HostDay; today: string 
         </div>
       </div>
 
-      <dl className="-mx-4 mb-5 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-3 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-6">
+      <dl
+        tabIndex={0}
+        aria-label="Resumo do dia (role para o lado para ver tudo)"
+        className="-mx-4 mb-5 flex gap-2 overflow-x-auto px-4 pb-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-3 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-6">
         <Stat label="Reservas" value={summary.reservations} />
         <Stat label="Pessoas" value={summary.people} hint={isToday ? `${summary.seatedPeople} na casa` : undefined} />
         <Stat label="Na mesa" value={summary.seated} hint={isToday ? `${summary.tablesBusy} mesas` : undefined} />
@@ -493,8 +525,8 @@ export function SalaoView({ initial, today }: { initial: HostDay; today: string 
           {leftTab === "linha" ? timeline : waitlist}
         </div>
         <Card className="sticky top-6">
-          <div className="mb-3 flex items-baseline justify-between gap-3">
-            <h2 className="text-base font-semibold text-stone-900">Mapa do salão</h2>
+          <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
+            <h2 className="whitespace-nowrap text-base font-semibold text-stone-900">Mapa do salão</h2>
             <p className="text-xs text-stone-500">Arraste uma reserva até uma mesa para trocar</p>
           </div>
           {map}
