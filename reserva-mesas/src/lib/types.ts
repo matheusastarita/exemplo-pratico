@@ -502,6 +502,83 @@ export type TeamData = {
   invites: { email: string; role: Role; full_name: string | null; created_at: string }[];
 };
 
+export type ManagerReservation = {
+  id: string;
+  code: string;
+  status: ReservationStatus;
+  source: ReservationSource;
+  date: string;
+  start_time: string;
+  end_time: string;
+  duration_minutes: number;
+  party_size: number;
+  occasion: Occasion | null;
+  notes: string | null;
+  dietary_notes: string | null;
+  internal_notes: string | null;
+  deposit_status: DepositStatus;
+  deposit_amount: number | null;
+  cancel_reason: string | null;
+  created_at: string;
+  customer_id: string;
+  customer_name: string;
+  customer_phone: string | null;
+  customer_tags: string[];
+  area_id: string | null;
+  tables: string | null;
+};
+
+export type CustomerSummary = {
+  id: string;
+  full_name: string;
+  phone: string | null;
+  email: string | null;
+  tags: string[];
+  birthday: string | null;
+  blocked: boolean;
+  allergies: string | null;
+  marketing_consent: boolean;
+  has_account: boolean;
+  visits: number;
+  no_shows: number;
+  cancellations: number;
+  people: number;
+  last_visit: string | null;
+  next_reservation: string | null;
+  created_at: string;
+};
+
+export type CustomerDetail = {
+  customer: CustomerRow;
+  reservations: {
+    id: string;
+    code: string;
+    status: ReservationStatus;
+    source: ReservationSource;
+    date: string;
+    start_time: string;
+    party_size: number;
+    occasion: Occasion | null;
+    notes: string | null;
+    dietary_notes: string | null;
+    cancel_reason: string | null;
+    tables: string | null;
+  }[];
+  messages: { kind: MessageKind; body: string; created_at: string; simulated: boolean }[];
+};
+
+export type ManagerOverview = {
+  today: string;
+  week_start: string;
+  day: ReportSummary;
+  same_day_last_week: ReportSummary;
+  week: ReportSummary;
+  prev_week: ReportSummary;
+  daily: ReportDailyRow[];
+  hours: ReportHourRow[];
+  busy_days: ReportDailyRow[];
+};
+
 // ----------------------------------------------------------------------------
 // Database (para o cliente Supabase tipado)
 // ----------------------------------------------------------------------------
@@ -684,6 +761,10 @@ export type Database = {
       report_daily: Fn<{ p_from: string; p_to: string }, ReportDailyRow[]>;
       report_by_weekday: Fn<{ p_from: string; p_to: string }, ReportWeekdayRow[]>;
       list_team: Fn<Record<string, never>, TeamData>;
+      manager_reservations: Fn<{ p_from: string; p_to: string }, ManagerReservation[]>;
+      customer_list: Fn<Record<string, never>, CustomerSummary[]>;
+      customer_detail: Fn<{ p_id: string }, CustomerDetail>;
+      manager_overview: Fn<Record<string, never>, ManagerOverview>;
       invite_staff: Fn<{ p_email: string; p_role: "host" | "manager"; p_full_name?: string | null }, string>;
       revoke_invite: Fn<{ p_email: string }, undefined>;
       set_staff: Fn<{ p_user_id: string; p_role: Role; p_active: boolean }, undefined>;

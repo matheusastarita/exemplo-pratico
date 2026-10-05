@@ -934,6 +934,11 @@ create trigger settings_touch
   before update on public.restaurant_settings
   for each row execute function public.touch_updated_at();
 
+drop trigger if exists templates_touch on public.message_templates;
+create trigger templates_touch
+  before update on public.message_templates
+  for each row execute function public.touch_updated_at();
+
 -- ============================================================================
 -- RPC PÚBLICAS (anon + authenticated)
 -- ============================================================================
@@ -2753,6 +2758,152 @@ end;
 $$;
 
 -- ============================================================================
+-- GERÊNCIA: listas e visão geral (só gerente)
+-- ============================================================================
+
+-- Reservas de um período com cliente e mesas (a tela filtra e exporta CSV).
+create or replace function public.manager_reservations(p_from date, p_to date)
+returns json
+language plpgsql
+security definer
+stable
+set search_path = public
+as $$
+begin
+  if not public.is_manager() then
+    raise exception 'not_allowed';
+  end if;
+  if p_to < p_from or p_to - p_from > 120 then
+    raise exception 'invalid_range';
+  end if;
+  return coalesce((
+    select json_agg(json_build_object(
+      'id', r.id, 'code', r.code, 'status', r.status, 'source', r.source,
+      'date', r.date, 'start_time', to_char(r.start_time, 'HH24:MI'), 'end_time', to_char(r.end_time, 'HH24:MI'),
+      'duration_minutes', r.duration_minutes, 'party_size', r.party_size, 'occasion', r.occasion,
+      'notes', r.notes, 'dietary_notes', r.dietary_notes, 'internal_notes', r.internal_notes,
+      'deposit_status', r.deposit_status, 'deposit_amount', r.deposit_amount,
+      'cancel_reason', r.cancel_reason, 'created_at', r.created_at,
+      'customer_id', c.id, 'customer_name', c.full_name, 'customer_phone', c.phone, 'customer_tags', c.tags,
+      'area_id', (select t.area_id from public.reservation_tables rt join public.dining_tables t on t.id = rt.table_id
+                  where rt.reservation_id = r.id order by rt.active desc limit 1),
+      'tables', (select string_agg(t.label, ' + ' order by t.label) from public.reservation_tables rt
+                 join public.dining_tables t on t.id = rt.table_id
+                 where rt.reservation_id = r.id and (rt.active or r.status in ('completed', 'no_show')))
+    ) order by r.date, r.start_time)
+    from public.reservations r
+    join public.customers c on c.id = r.customer_id
+    where r.date between p_from and p_to
+  ), '[]'::json);
+end;
+$$;
+
+-- Clientes com totais (visitas, faltas, cancelamentos, última visita, próxima reserva).
+create or replace function public.customer_list()
+returns json
+language plpgsql
+security definer
+stable
+set search_path = public
+as $$
+begin
+  if not public.is_staff() then
+    raise exception 'not_allowed';
+  end if;
+  return coalesce((
+    select json_agg(json_build_object(
+      'id', c.id, 'full_name', c.full_name, 'phone', c.phone, 'email', c.email, 'tags', c.tags,
+      'birthday', c.birthday, 'blocked', c.blocked, 'allergies', c.allergies,
+      'marketing_consent', c.marketing_consent, 'has_account', c.user_id is not null,
+      'visits', coalesce(x.visits, 0), 'no_shows', coalesce(x.no_shows, 0),
+      'cancellations', coalesce(x.cancellations, 0), 'people', coalesce(x.people, 0),
+      'last_visit', x.last_visit, 'next_reservation', x.next_reservation, 'created_at', c.created_at
+    ) order by c.full_name)
+    from public.customers c
+    left join lateral (
+      select count(*) filter (where r.status = 'completed') as visits,
+             count(*) filter (where r.status = 'no_show') as no_shows,
+             count(*) filter (where r.status = 'cancelled') as cancellations,
+             coalesce(sum(r.party_size) filter (where r.status = 'completed'), 0) as people,
+             max(r.date) filter (where r.status = 'completed') as last_visit,
+             min(r.date) filter (where r.status in ('pending', 'confirmed') and r.date >= public.sp_today()) as next_reservation
+      from public.reservations r where r.customer_id = c.id
+    ) x on true
+    where c.anonymized_at is null
+  ), '[]'::json);
+end;
+$$;
+
+-- Ficha do cliente: dados + todas as reservas.
+create or replace function public.customer_detail(p_id uuid)
+returns json
+language plpgsql
+security definer
+stable
+set search_path = public
+as $$
+declare
+  v json;
+begin
+  if not public.is_staff() then
+    raise exception 'not_allowed';
+  end if;
+  select json_build_object(
+    'customer', to_json(c),
+    'reservations', coalesce((select json_agg(json_build_object(
+        'id', r.id, 'code', r.code, 'status', r.status, 'source', r.source, 'date', r.date,
+        'start_time', to_char(r.start_time, 'HH24:MI'), 'party_size', r.party_size, 'occasion', r.occasion,
+        'notes', r.notes, 'dietary_notes', r.dietary_notes, 'cancel_reason', r.cancel_reason,
+        'tables', (select string_agg(t.label, ' + ' order by t.label) from public.reservation_tables rt
+                   join public.dining_tables t on t.id = rt.table_id where rt.reservation_id = r.id))
+        order by r.date desc, r.start_time desc)
+      from public.reservations r where r.customer_id = c.id), '[]'::json),
+    'messages', coalesce((select json_agg(json_build_object('kind', m.kind, 'body', m.body, 'created_at', m.created_at,
+        'simulated', m.simulated) order by m.created_at desc)
+      from (select * from public.message_log ml where ml.customer_id = c.id order by ml.created_at desc limit 30) m), '[]'::json)
+  ) into v
+  from public.customers c where c.id = p_id;
+  if v is null then
+    raise exception 'not_found';
+  end if;
+  return v;
+end;
+$$;
+
+-- Visão geral do gerente: hoje, semana atual x anterior, série diária, pico por
+-- horário e próximas datas com alta ocupação.
+create or replace function public.manager_overview()
+returns json
+language plpgsql
+security definer
+stable
+set search_path = public
+as $$
+declare
+  v_today date := public.sp_today();
+  v_week_start date := v_today - ((extract(isodow from v_today)::int) - 1);
+begin
+  if not public.is_manager() then
+    raise exception 'not_allowed';
+  end if;
+  return json_build_object(
+    'today', v_today,
+    'week_start', v_week_start,
+    'day', public.report_summary(v_today, v_today),
+    'same_day_last_week', public.report_summary(v_today - 7, v_today - 7),
+    -- "semana" = últimos 7 dias x os 7 anteriores (sempre com dados completos)
+    'week', public.report_summary(v_today - 6, v_today),
+    'prev_week', public.report_summary(v_today - 13, v_today - 7),
+    'daily', coalesce((select json_agg(to_json(d) order by d.day) from public.report_daily(v_today - 27, v_today + 14) d), '[]'::json),
+    'hours', coalesce((select json_agg(to_json(h) order by h.hour) from public.report_by_hour(v_today - 29, v_today) h), '[]'::json),
+    'busy_days', coalesce((select json_agg(to_json(d) order by d.occupancy desc nulls last, d.day)
+                           from public.report_daily(v_today + 1, v_today + 21) d
+                           where d.reservations > 0), '[]'::json)
+  );
+end;
+$$;
+
+-- ============================================================================
 -- EQUIPE (só gerente)
 -- ============================================================================
 
@@ -2968,7 +3119,15 @@ revoke insert, update, delete, truncate on all tables in schema public from auth
 
 grant select on all tables in schema public to authenticated;
 grant update (full_name, phone, birthday, preferences) on public.profiles to authenticated;
-grant update on public.restaurant_settings, public.customers, public.message_templates to authenticated;
+-- Colunas editáveis pela tela (o resto só muda por função: bloqueio com motivo,
+-- anonimização, modo demo). O RLS decide quem (equipe ou gerente) pode atualizar.
+grant update (full_name, phone, email, tags, notes, allergies, birthday) on public.customers to authenticated;
+grant update (name, tagline, address, phone, whatsapp, instagram, primary_color, logo_url, public_url,
+              slot_step_minutes, min_notice_minutes, max_advance_days, max_party_online, cancel_deadline_hours,
+              grace_minutes, no_show_block_after, waitlist_enabled, deposit_enabled, deposit_min_party,
+              deposit_per_person)
+  on public.restaurant_settings to authenticated;
+grant update (body, active) on public.message_templates to authenticated;
 grant insert, update, delete on public.areas, public.dining_tables, public.shifts, public.turn_times, public.closures
   to authenticated;
 
@@ -3032,6 +3191,10 @@ grant execute on function public.report_by_hour(date, date) to authenticated;
 grant execute on function public.report_daily(date, date) to authenticated;
 grant execute on function public.report_by_weekday(date, date) to authenticated;
 grant execute on function public.list_team() to authenticated;
+grant execute on function public.manager_reservations(date, date) to authenticated;
+grant execute on function public.customer_list() to authenticated;
+grant execute on function public.customer_detail(uuid) to authenticated;
+grant execute on function public.manager_overview() to authenticated;
 grant execute on function public.invite_staff(text, text, text) to authenticated;
 grant execute on function public.revoke_invite(text) to authenticated;
 grant execute on function public.set_staff(uuid, text, boolean) to authenticated;

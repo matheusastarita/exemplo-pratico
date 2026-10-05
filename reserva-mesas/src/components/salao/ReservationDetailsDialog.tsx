@@ -1,58 +1,17 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
 import { Input, Textarea } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { Badge } from "@/components/ui/Badge";
-import { Skeleton } from "@/components/ui/Skeleton";
-import { WhatsAppPreview } from "@/components/WhatsAppPreview";
+import { ReservationHistoryView } from "@/components/reservas/ReservationHistory";
 import { formatDateFull } from "@/lib/dates";
 import { formatBRL, formatPhone, peopleLabel, telHref } from "@/lib/format";
 import { friendlyErrorMessage, OCCASION_LABEL, OCCASION_OPTIONS, SOURCE_LABEL, STATUS_LABEL, STAFF_ERROR_MESSAGES } from "@/lib/constants";
-import type { HostReservation, Occasion, ReservationHistory, ReservationStatus } from "@/lib/types";
-
-const KIND_LABEL: Record<string, string> = {
-  confirmacao: "Confirmação",
-  lembrete_24h: "Lembrete (24h)",
-  lembrete_2h: "Lembrete (2h)",
-  alteracao: "Alteração",
-  cancelamento: "Cancelamento",
-  lista_espera: "Lista de espera",
-  manual: "Mensagem da equipe",
-};
-
-function eventText(e: ReservationHistory["events"][number]): string {
-  const d = (e.details ?? {}) as Record<string, string | number | boolean>;
-  if (e.action === "created") return `Reserva criada (${SOURCE_LABEL[d.source as keyof typeof SOURCE_LABEL] ?? "—"})`;
-  if (e.action === "tables") return d.tables ? `Mesa definida: ${d.tables}` : "Mesas liberadas";
-  const parts: string[] = [];
-  if (d.status_to) {
-    parts.push(
-      `${STATUS_LABEL[d.status_from as ReservationStatus] ?? d.status_from} → ${STATUS_LABEL[d.status_to as ReservationStatus] ?? d.status_to}`
-    );
-  }
-  if (d.reason) parts.push(`motivo: ${d.reason}`);
-  if (d.from) parts.push(`horário ${d.from} → ${d.to}`);
-  if (d.party_to) parts.push(`pessoas ${d.party_from} → ${d.party_to}`);
-  if (d.notes_changed) parts.push("observações editadas");
-  if (d.customer_confirmed) parts.push("cliente confirmou presença");
-  if (d.deposit_to) parts.push(`sinal: ${d.deposit_to === "paid" ? "pago" : d.deposit_to}`);
-  if (d.check_requested) parts.push("pediu a conta");
-  return parts.join(" · ") || "Atualização";
-}
-
-function when(iso: string) {
-  return new Date(iso).toLocaleString("pt-BR", {
-    timeZone: "America/Sao_Paulo",
-    day: "2-digit",
-    month: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
+import type { HostReservation, Occasion } from "@/lib/types";
 
 /** Ficha da reserva: dados, edição rápida e histórico (mudanças + mensagens). */
 export function ReservationDetailsDialog({
@@ -68,24 +27,10 @@ export function ReservationDetailsDialog({
   onClose: () => void;
   onSaved: (message: string) => void;
 }) {
-  const supabase = useMemo(() => createClient(), []);
-  const [history, setHistory] = useState<{ id: string; data: ReservationHistory | null } | null>(null);
   const [editing, setEditing] = useState(false);
   const r = reservation;
 
-  useEffect(() => {
-    if (!r) return;
-    let cancelled = false;
-    supabase.rpc("reservation_history", { p_id: r.id }).then(({ data }) => {
-      if (!cancelled) setHistory({ id: r.id, data: data ?? null });
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [r, supabase]);
-
   if (!r) return null;
-  const loadingHistory = history?.id !== r.id;
   const editable = r.status === "pending" || r.status === "confirmed" || r.status === "seated";
 
   return (
@@ -190,41 +135,7 @@ export function ReservationDetailsDialog({
             </Button>
           )}
 
-          <section>
-            <h3 className="mb-3 text-sm font-semibold text-stone-900">Histórico</h3>
-            {loadingHistory ? (
-              <div className="flex flex-col gap-2" role="status" aria-label="Carregando histórico">
-                <Skeleton className="h-4 w-3/4" />
-                <Skeleton className="h-4 w-1/2" />
-              </div>
-            ) : (
-              <ol className="flex flex-col gap-2 border-l-2 border-stone-200 pl-4 text-sm">
-                {(history?.data?.events ?? []).map((e, i) => (
-                  <li key={i} className="text-stone-700">
-                    <span className="text-xs text-stone-500">{when(e.created_at)}</span> · {eventText(e)}
-                    {e.actor_name ? <span className="text-stone-500"> — {e.actor_name}</span> : null}
-                  </li>
-                ))}
-                {(history?.data?.events ?? []).length === 0 && <li className="text-stone-500">Sem mudanças registradas.</li>}
-              </ol>
-            )}
-          </section>
-
-          {(history?.data?.messages ?? []).length > 0 && (
-            <section>
-              <h3 className="mb-3 text-sm font-semibold text-stone-900">Mensagens enviadas</h3>
-              <div className="flex flex-col gap-3">
-                {(history?.data?.messages ?? []).map((m, i) => (
-                  <div key={i}>
-                    <p className="mb-1 text-xs text-stone-500">
-                      {KIND_LABEL[m.kind] ?? m.kind} · {when(m.created_at)}
-                    </p>
-                    <WhatsAppPreview body={m.body} sender={restaurant} simulated={m.simulated} />
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
+          <ReservationHistoryView reservationId={r.id} restaurant={restaurant} />
         </div>
       )}
     </Modal>

@@ -301,6 +301,14 @@ export const DownloadIcon = (p: IconProps) => (
   </Base>
 );
 
+export const FilterIcon = (p: IconProps) => (
+  <Base {...p}>
+    <path d="M4 7h10M18 7h2M4 17h2M10 17h10" />
+    <circle cx="16" cy="7" r="2" />
+    <circle cx="8" cy="17" r="2" />
+  </Base>
+);
+
 export const EditIcon = (p: IconProps) => (
   <Base {...p}>
     <path d="M15.5 5.5 18.5 8.5M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5 4 20Z" />

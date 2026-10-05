@@ -48,7 +48,7 @@ export function StatTile({
     <Card padding="none" className="relative flex flex-col gap-3 px-5 py-5">
       <span className={toneText}>{icon}</span>
       <div>
-        <p className="text-[28px] font-semibold leading-none tracking-tight tabular-nums text-stone-900">
+        <p className="text-[28px] font-semibold leading-none tracking-tight text-stone-900">
           {value}
         </p>
         <p className="mt-2 text-sm text-stone-500">{label}</p>

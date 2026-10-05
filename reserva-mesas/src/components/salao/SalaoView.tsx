@@ -666,7 +666,7 @@ function Stat({ label, value, hint, tone }: { label: string; value: number | str
   return (
     <div className={`min-w-[104px] shrink-0 rounded-control border bg-white px-3 py-2 sm:min-w-0 sm:py-2.5 ${tone === "late" ? "border-status-late/40" : "border-stone-200/80"}`}>
       <dt className="truncate text-xs text-stone-500">{label}</dt>
-      <dd className={`text-xl font-semibold tabular-nums ${tone === "late" ? "text-status-late" : "text-stone-900"}`}>{value}</dd>
+      <dd className={`text-xl font-semibold ${tone === "late" ? "text-status-late" : "text-stone-900"}`}>{value}</dd>
       {hint && <dd className="truncate text-[11px] text-stone-500">{hint}</dd>}
     </div>
   );
