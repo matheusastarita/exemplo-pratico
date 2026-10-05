@@ -17,7 +17,7 @@ Stack: Next.js 16 (App Router) · React 19 · Tailwind CSS 3.4 · Supabase (Post
 1. Crie um projeto em [supabase.com](https://supabase.com) (região São Paulo, de preferência).
 2. Abra **SQL Editor**, cole o conteúdo de [`supabase/schema.sql`](supabase/schema.sql) e rode. O arquivo pode ser rodado de novo depois (atualiza funções e permissões sem apagar dados).
 3. **Só para demonstração:** rode também [`supabase/seed_demo.sql`](supabase/seed_demo.sql). Ele cria o restaurante fictício *Bistrô Alecrim* com mesas, turnos, ~300 clientes, 90 dias de histórico, 14 dias à frente e o dia de hoje "vivo". **Não rode em produção** — ele apaga os dados de operação.
-4. Em **Project Settings → API**, copie a *Project URL* e a *anon public key*. Só essas duas vão para o app. A `service_role` **nunca** é usada.
+4. Copie a *Project URL* (botão **Connect** no topo, ou **Project Settings → Data API**) e a chave pública: em projetos novos ela se chama **Publishable key** (`sb_publishable_...`, em **Project Settings → API Keys**); em projetos antigos, **anon public**. As duas funcionam na variável `NEXT_PUBLIC_SUPABASE_ANON_KEY`. A `service_role` / **secret key** **nunca** é usada.
 
 ### Autenticação
 
@@ -66,7 +66,7 @@ Copie `.env.local.example` para `.env.local` (que fica fora do git) e preencha:
 | Variável | Onde é usada | Valor |
 |---|---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | navegador e servidor | Project URL do Supabase |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | navegador e servidor | anon public key (é pública por natureza; a proteção é o RLS) |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | navegador e servidor | Publishable key (`sb_publishable_...`) ou anon public key — é pública por natureza; a proteção é o RLS |
 | `NEXT_PUBLIC_DEMO_MODE` | servidor | `true` só no ambiente de demonstração. Mostra os botões de entrada rápida e libera "Resetar demonstração" (que também exige o modo demo ligado no banco). Em produção, `false`. |
 | `DEMO_MANAGER_EMAIL` / `DEMO_MANAGER_PASSWORD` | só servidor | conta de gerente da demo |
 | `DEMO_HOST_EMAIL` / `DEMO_HOST_PASSWORD` | só servidor | conta de anfitrião da demo |
@@ -94,12 +94,14 @@ npm run build       # pare o "npm run dev" antes: os dois usam a pasta .next
 
 ## 5. Deploy na Vercel
 
-1. Na Vercel, **Add New → Project** e importe o repositório. Se o projeto estiver numa subpasta, aponte o **Root Directory** para ela (aqui, `reserva-mesas`).
-2. Em **Environment Variables**, cadastre as variáveis da seção 3 (em produção, `NEXT_PUBLIC_DEMO_MODE=false` e sem as `DEMO_*`).
-3. Faça o deploy e coloque o endereço final em **Site URL** e **Redirect URLs** do Supabase (seção 1).
-4. Em **Gerência → Configurações**, preencha "Endereço do site de reservas" (é o link que vai nas mensagens).
+1. Na Vercel, **Add New → Project** e importe o repositório. Em **Root Directory**, clique em **Edit** e escolha a pasta `reserva-mesas` (o repositório tem outros projetos).
+2. Em **Environment Variables**, cadastre as variáveis da seção 3. Numa demonstração: `NEXT_PUBLIC_DEMO_MODE=true` e as `DEMO_*`. Em produção: `false` e sem as `DEMO_*`.
+3. Clique em **Deploy**.
+4. **Se o código não estiver na branch padrão do repositório** (aqui ele está em `claude/lucid-ride-oe5g3p`), o primeiro deploy falha porque a pasta não existe lá. Corrija em **Settings → Environments → Production → Branch Tracking**, escolha a branch do projeto, salve e faça **Deployments → Redeploy** (ou faça merge da branch na principal).
+5. Copie o endereço que a Vercel deu (ex.: `https://reserva-mesas.vercel.app`) e coloque em **Site URL** e **Redirect URLs** do Supabase (seção 1).
+6. Em **Gerência → Configurações**, preencha "Endereço do site de reservas" com esse mesmo endereço (é o link que vai nas mensagens).
 
-Atenção aos commits: a Vercel pode recusar deploy de commits cujo autor não é uma conta do GitHub. Use o e-mail *noreply* da sua conta (`usuario@users.noreply.github.com`) no `git config user.email`.
+Atenção aos commits: a Vercel pode recusar deploy de commits cujo autor não é uma conta do GitHub. Use o e-mail *noreply* da sua conta no `git config user.email` — o formato atual é `ID+usuario@users.noreply.github.com` (aparece em GitHub → Settings → Emails).
 
 ## 6. Segurança (resumo)
 
