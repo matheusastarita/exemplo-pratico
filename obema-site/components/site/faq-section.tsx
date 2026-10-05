@@ -16,7 +16,7 @@ export function FaqSection({
       <div className="wrap grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
         <div>
           <p className="eyebrow">Dúvidas</p>
-          <h2 id="faq-title" className="mt-5 text-display font-bold tracking-[-0.035em]">
+          <h2 id="faq-title" className="mt-5 text-display font-extrabold tracking-[-0.04em]">
             {title}
           </h2>
           <p className="mt-6 max-w-[40ch] text-lede text-muted-foreground">

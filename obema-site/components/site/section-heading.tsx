@@ -26,7 +26,7 @@ export function SectionHeading({
     >
       <div>
         <p className="eyebrow">{eyebrow}</p>
-        <Title id={titleId} className="mt-5 text-display font-bold tracking-[-0.035em]">{title}</Title>
+        <Title id={titleId} className="mt-5 text-display font-extrabold tracking-[-0.04em]">{title}</Title>
       </div>
       {lede ? (
         <p className={cn("text-lede text-muted-foreground", align === "split" ? "max-w-[44ch]" : "mt-6 max-w-[48ch]")}>

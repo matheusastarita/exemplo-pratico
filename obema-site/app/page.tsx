@@ -27,7 +27,7 @@ export default function HomePage() {
           <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-end lg:gap-20">
             <div>
               <p className="eyebrow">Sobre a OBEMA</p>
-              <h2 id="sobre-title" className="mt-5 text-display font-bold tracking-[-0.035em]">
+              <h2 id="sobre-title" className="mt-5 text-display font-extrabold tracking-[-0.04em]">
                 Empresa boa merece presença à altura.
               </h2>
             </div>
@@ -36,15 +36,13 @@ export default function HomePage() {
               reputação, <span className="text-foreground">quase invisíveis nas redes.</span> A gente cuida dessa parte.
             </p>
           </div>
-          <ul className="mt-16 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mt-16 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
             {principles.map((item) => {
               const Icon = item.icon;
               return (
-                <li key={item.title} data-reveal className="rounded-xl border border-border bg-card p-6">
-                  <span className="grid size-12 place-items-center rounded-2xl bg-lime text-navy">
-                    <Icon className="size-5" aria-hidden="true" />
-                  </span>
-                  <h3 className="mt-8 text-lg font-bold tracking-tight">{item.title}</h3>
+                <li key={item.title} data-reveal className="border-t border-navy pt-6">
+                  <Icon className="size-6" strokeWidth={1.75} aria-hidden="true" />
+                  <h3 className="mt-6 text-lg font-bold tracking-tight">{item.title}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">{item.text}</p>
                 </li>
               );
@@ -54,7 +52,7 @@ export default function HomePage() {
       </section>
 
       {/* Serviços */}
-      <section id="servicos" className="bg-paper-2/60 py-24 md:py-32" aria-labelledby="servicos-title">
+      <section id="servicos" className="bg-muted py-24 md:py-32" aria-labelledby="servicos-title">
         <div className="wrap">
           <SectionHeading
             eyebrow="Serviços"

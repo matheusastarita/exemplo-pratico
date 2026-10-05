@@ -20,7 +20,11 @@ export default function CasesPage() {
     <>
       <PageHero
         eyebrow="Cases"
-        title="Do perfil zerado ao perfil que apresenta o negócio."
+        title={
+          <>
+            Do perfil zerado ao perfil que <span className="text-slate-accent">apresenta o negócio.</span>
+          </>
+        }
         lede="Resultado medido, não prometido. Aqui está o antes e o depois de um trabalho real, e o que os clientes contam na frente da câmera."
       />
 
@@ -39,7 +43,7 @@ export default function CasesPage() {
         </div>
       </section>
 
-      <section className="bg-paper-2/60 py-24 md:py-32" aria-labelledby="entregas-title">
+      <section className="bg-muted py-24 md:py-32" aria-labelledby="entregas-title">
         <div className="wrap">
           <SectionHeading eyebrow="O que a gente criou" titleId="entregas-title" title="Quatro peças, um sistema só." />
           <ul className="mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -57,10 +61,10 @@ export default function CasesPage() {
       <section className="dark bg-background py-24 text-foreground md:py-32" aria-labelledby="depoimentos-title">
         <div className="wrap">
           <figure className="max-w-5xl">
-            <blockquote className="font-display text-display font-bold tracking-[-0.035em]">
-              <span className="text-lime">“</span>
+            <blockquote className="font-display text-display font-extrabold tracking-[-0.04em]">
+              <span className="text-slate-accent">“</span>
               {jmCase.quote}
-              <span className="text-lime">”</span>
+              <span className="text-slate-accent">”</span>
             </blockquote>
             <figcaption className="mt-6 text-sm text-muted-foreground">
               Case desenvolvido pela OBEMA · perfil{" "}

@@ -34,7 +34,11 @@ export default function SobrePage() {
     <>
       <PageHero
         eyebrow="Sobre a OBEMA"
-        title="Empresa boa merece presença à altura."
+        title={
+          <>
+            Empresa boa merece <span className="text-slate-accent">presença à altura.</span>
+          </>
+        }
         lede="A OBEMA nasceu em Curitiba pra resolver um problema comum: negócios sólidos, com bom atendimento e boa reputação, quase invisíveis nas redes. A gente cuida dessa parte."
         aside={
           <RemoteImage
@@ -47,7 +51,7 @@ export default function SobrePage() {
         }
       />
 
-      <section aria-label="A OBEMA em números" className="border-b border-border bg-card">
+      <section aria-label="A OBEMA em números" className="border-b border-border bg-muted">
         <dl className="wrap grid grid-cols-2 gap-y-8 py-12 lg:grid-cols-4">
           {numbers.map((item) => (
             <div key={item.label} className="flex flex-col gap-1 border-l border-border pl-5">
@@ -72,7 +76,7 @@ export default function SobrePage() {
               const Icon = item.icon;
               return (
                 <li key={item.title} data-reveal className="flex gap-6 rounded-xl border border-border bg-card p-6 md:p-8">
-                  <span className="grid size-14 shrink-0 place-items-center rounded-2xl bg-navy text-lime">
+                  <span className="grid size-14 shrink-0 place-items-center rounded-2xl bg-navy text-white">
                     <Icon className="size-6" aria-hidden="true" />
                   </span>
                   <div>
@@ -91,7 +95,7 @@ export default function SobrePage() {
         <div className="wrap grid gap-14 lg:grid-cols-[1fr_1.1fr] lg:items-center">
           <div>
             <p className="eyebrow">Quem toca</p>
-            <h2 id="time-title" className="mt-5 text-display font-bold tracking-[-0.035em]">
+            <h2 id="time-title" className="mt-5 text-display font-extrabold tracking-[-0.04em]">
               Atendimento direto com quem decide.
             </h2>
             <p className="mt-6 max-w-[42ch] text-lede text-muted-foreground">
@@ -103,7 +107,7 @@ export default function SobrePage() {
               <li key={person.name} data-reveal className="rounded-xl border border-border bg-card p-6 md:p-8">
                 <span
                   aria-hidden="true"
-                  className="grid size-16 place-items-center rounded-full border-[5px] border-lime font-display text-lg font-bold"
+                  className="grid size-16 place-items-center rounded-full border-2 border-white font-display text-lg font-bold"
                 >
                   {initials(person.name)}
                 </span>

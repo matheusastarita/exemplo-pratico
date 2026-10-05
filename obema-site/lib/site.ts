@@ -23,8 +23,10 @@ export const site = {
 } as const;
 
 export const nav = [
+  { href: "/", label: "Início" },
   { href: "/servicos", label: "Serviços" },
   { href: "/cases", label: "Cases" },
+  { href: "/#depoimentos", label: "Depoimentos" },
   { href: "/sobre", label: "Sobre" },
   { href: "/contato", label: "Contato" },
 ] as const;

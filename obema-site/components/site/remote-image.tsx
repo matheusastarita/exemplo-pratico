@@ -15,14 +15,13 @@ export function RemoteImage({ className, alt, ...props }: ImageProps) {
   return (
     <div
       className={cn(
-        "relative overflow-hidden bg-[radial-gradient(circle_at_20%_15%,rgba(201,240,60,0.22),transparent_40%),linear-gradient(140deg,#122849,#0b1b34_60%,#071222)]",
+        "relative overflow-hidden bg-[linear-gradient(150deg,#122849,#0b1b34_60%,#071222)]",
         className
       )}
     >
-      <div aria-hidden="true" className="bg-grid absolute inset-0 opacity-60" />
-      <span
+            <span
         aria-hidden="true"
-        className="absolute top-1/2 left-1/2 aspect-square w-[46%] -translate-x-1/2 -translate-y-1/2 rounded-full border-[clamp(18px,3vw,40px)] border-lime/80"
+        className="absolute top-1/2 left-1/2 aspect-square w-[46%] -translate-x-1/2 -translate-y-1/2 rounded-full border-[clamp(18px,3vw,40px)] border-white/85"
       />
       {failed ? null : (
         <Image
