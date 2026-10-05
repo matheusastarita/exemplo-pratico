@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fábrica de Clientes</title>
+<style>
+  :root {
+    --bg: #0b0d12;
+    --bg-soft: #12151c;
+    --card: #161a23;
+    --border: #262b38;
+    --text: #e9ecf3;
+    --text-dim: #9aa2b4;
+    --accent: #6c5ce7;
+    --accent-2: #00d2a8;
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(11,13,18,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 0;
+  }
+  .logo { font-weight: 700; font-size: 18px; letter-spacing: -0.02em; display:flex; align-items:center; gap:8px; }
+  .logo-mark { width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); }
+  .nav-links { display: flex; gap: 32px; font-size: 14px; color: var(--text-dim); }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    padding: 9px 18px; border-radius: 999px; font-size: 14px; font-weight: 600;
+    background: var(--text); color: var(--bg);
+  }
+
+  .hero { padding: 110px 0 90px; text-align: center; }
+  .eyebrow {
+    display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent-2);
+    background: rgba(0,210,168,0.1); border: 1px solid rgba(0,210,168,0.25);
+    padding: 6px 14px; border-radius: 999px; margin-bottom: 24px;
+  }
+  h1 {
+    font-size: clamp(34px, 6vw, 60px); font-weight: 800; letter-spacing: -0.03em;
+    max-width: 820px; margin: 0 auto 20px;
+  }
+  h1 span {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .subhead {
+    font-size: 18px; color: var(--text-dim); max-width: 580px; margin: 0 auto 36px;
+  }
+  .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    padding: 14px 28px; border-radius: 10px; font-weight: 700; font-size: 15px;
+    background: linear-gradient(135deg, var(--accent), #8a7bf0); color: #fff;
+  }
+  .btn-secondary {
+    padding: 14px 28px; border-radius: 10px; font-weight: 600; font-size: 15px;
+    border: 1px solid var(--border); color: var(--text);
+  }
+
+  section { padding: 90px 0; }
+  .section-head { text-align: center; max-width: 620px; margin: 0 auto 56px; }
+  .section-head .tag { color: var(--accent-2); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; display:block; }
+  .section-head h2 { font-size: clamp(26px, 4vw, 38px); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 14px; }
+  .section-head p { color: var(--text-dim); font-size: 16px; }
+
+  #recursos { background: var(--bg-soft); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 28px; transition: border-color .2s, transform .2s;
+  }
+  .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .card-icon {
+    width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    background: rgba(108,92,231,0.12); margin-bottom: 18px; font-size: 20px;
+  }
+  .card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .card p { font-size: 14px; color: var(--text-dim); }
+
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .step { text-align: left; }
+  .step-num {
+    width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700;
+    color: var(--accent-2); margin-bottom: 16px;
+  }
+  .step h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .step p { font-size: 13px; color: var(--text-dim); }
+
+  .cta-box {
+    background: linear-gradient(135deg, rgba(108,92,231,0.15), rgba(0,210,168,0.1));
+    border: 1px solid var(--border); border-radius: 20px;
+    padding: 64px 40px; text-align: center;
+  }
+  .cta-box h2 { font-size: clamp(24px, 4vw, 34px); font-weight: 800; margin-bottom: 14px; letter-spacing: -0.02em; }
+  .cta-box p { color: var(--text-dim); margin-bottom: 28px; }
+
+  footer { border-top: 1px solid var(--border); padding: 36px 0; text-align: center; color: var(--text-dim); font-size: 13px; }
+
+  @media (max-width: 860px) {
+    .grid { grid-template-columns: 1fr 1fr; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 540px) {
+    .grid { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+    .hero { padding: 80px 0 60px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="logo"><span class="logo-mark"></span>Fábrica de Clientes</div>
+      <div class="nav-links">
+        <a href="#recursos">Recursos</a>
+        <a href="#como-funciona">Como funciona</a>
+        <a href="#comecar">Preços</a>
+      </div>
+      <a href="#comecar" class="nav-cta">Começar agora</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Para agências e prestadores de serviço</span>
+    <h1>Monte seu sistema de <span>aquisição de clientes</span> do zero, sem contratar ninguém</h1>
+    <p class="subhead">Funil, proposta e apresentação prontos em minutos. Tudo que você precisa pra captar, converter e fechar clientes novos — num lugar só.</p>
+    <div class="hero-actions">
+      <a href="#comecar" class="btn-primary">Começar agora</a>
+      <a href="#recursos" class="btn-secondary">Ver recursos</a>
+    </div>
+  </div>
+</section>
+
+<section id="recursos">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">Recursos</span>
+      <h2>Tudo que seu negócio precisa pra vender mais</h2>
+      <p>Cada ferramenta foi pensada pra reduzir o trabalho manual de captar e fechar clientes novos.</p>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-icon">🧲</div>
+        <h3>Funil de captação</h3>
+        <p>Página de captura pronta pra atrair leads qualificados e organizar o fluxo até o fechamento.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📄</div>
+        <h3>Gerador de propostas</h3>
+        <p>Monte propostas comerciais profissionais em minutos, sem começar do zero toda vez.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🖼️</div>
+        <h3>Mockups automáticos</h3>
+        <p>Apresente a ideia ao cliente com mockups visuais gerados automaticamente a partir do briefing.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <h3>Painel de acompanhamento</h3>
+        <p>Veja em que etapa cada lead está e nunca mais perca um cliente por falta de follow-up.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚙️</div>
+        <h3>Processo replicável</h3>
+        <p>Um passo a passo interno de como montar e escalar seu próprio sistema de captação.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🚀</div>
+        <h3>Pronto pra usar</h3>
+        <p>Sem instalar nada complexo. Comece a captar clientes ainda hoje.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="como-funciona">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">Como funciona</span>
+      <h2>Do lead ao cliente fechado em 4 passos</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>Capture o lead</h4>
+        <p>Use o funil pronto pra atrair interessados no seu serviço.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>Gere a proposta</h4>
+        <p>Preencha o briefing e receba uma proposta pronta pra enviar.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>Mostre o resultado</h4>
+        <p>Apresente um mockup visual pra o cliente enxergar o que vai receber.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h4>Feche o negócio</h4>
+        <p>Acompanhe tudo no painel até assinar o contrato.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="comecar">
+  <div class="wrap">
+    <div class="cta-box">
+      <h2>Pronto pra parar de perder clientes por falta de processo?</h2>
+      <p>Comece a usar a Fábrica de Clientes agora e organize sua captação de ponta a ponta.</p>
+      <a href="#" class="btn-primary">Começar agora</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Fábrica de Clientes — todos os direitos reservados.
+  </div>
+</footer>
+
+</body>
+</html>
