@@ -22,7 +22,7 @@ export function CaseCompare() {
         <ol className="mt-6 grid" aria-live="polite">
           {notes.map((note, i) => (
             <li key={note.title} className="grid grid-cols-[auto_1fr] gap-x-5 border-t border-border py-5">
-              <span className={cn("font-mono text-xs leading-7", view === "depois" ? "text-lime" : "text-muted-foreground")}>
+              <span className={cn("font-mono text-xs leading-7", view === "depois" ? "text-navy" : "text-muted-foreground")}>
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div>
@@ -44,7 +44,7 @@ export function CaseCompare() {
               onClick={() => setView(option)}
               className={cn(
                 "min-h-11 min-w-28 cursor-pointer rounded-full px-5 text-sm font-semibold capitalize transition-colors",
-                view === option ? "bg-lime text-navy" : "text-muted-foreground hover:text-foreground"
+                view === option ? "bg-navy text-white" : "text-muted-foreground hover:text-foreground"
               )}
             >
               {option}

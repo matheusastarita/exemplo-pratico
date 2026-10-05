@@ -12,18 +12,10 @@ export function CtaSection({ className }: { className?: string }) {
     <section className={cn("py-16 md:py-24", className)} aria-labelledby="cta-title">
       <div className="wrap">
         <div className="dark relative isolate overflow-hidden rounded-[clamp(24px,3vw,40px)] bg-background p-8 text-foreground md:p-14 lg:p-20">
-          <div
-            aria-hidden="true"
-            className="bg-grid absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_60%_80%_at_85%_10%,#000,transparent_75%)]"
-          />
-          <div
-            aria-hidden="true"
-            className="absolute -right-32 -bottom-40 -z-10 size-[520px] rounded-full bg-[radial-gradient(closest-side,rgba(201,240,60,0.2),transparent)]"
-          />
           <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:items-end">
             <div>
               <p className="eyebrow">Próximo passo</p>
-              <h2 id="cta-title" className="mt-5 max-w-[16ch] text-display font-bold tracking-[-0.035em]">
+              <h2 id="cta-title" className="mt-5 max-w-[16ch] text-display font-extrabold tracking-[-0.04em]">
                 Vamos ver o que dá pra fazer com a sua marca?
               </h2>
               <p className="mt-6 max-w-[46ch] text-lede text-muted-foreground">
@@ -42,7 +34,7 @@ export function CtaSection({ className }: { className?: string }) {
               </div>
             </div>
 
-            <aside className="rounded-xl border border-border bg-card/60 p-6 backdrop-blur-sm md:p-8">
+            <aside className="rounded-xl border border-border p-6 md:p-8">
               <p className="font-display text-xl font-bold">Manda o @ da sua empresa.</p>
               <p className="mt-3 text-sm text-muted-foreground">
                 A gente responde com as duas ou três coisas que faria primeiro. Em horário comercial, geralmente no mesmo dia.

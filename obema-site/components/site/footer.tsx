@@ -16,10 +16,10 @@ export function Footer() {
               href={whatsappLink()}
               target="_blank"
               rel="noopener noreferrer"
-              className="group mt-6 inline-block font-display text-display font-bold tracking-[-0.035em]"
+              className="group mt-6 inline-block font-display text-display font-extrabold tracking-[-0.04em]"
             >
               Fala com a gente{" "}
-              <span className="inline-flex items-center gap-3 text-lime">
+              <span className="inline-flex items-center gap-3 text-slate-accent">
                 no WhatsApp
                 <ArrowUpRight
                   className="size-[0.7em] transition-transform duration-500 ease-brand group-hover:translate-x-1 group-hover:-translate-y-1"
@@ -31,20 +31,20 @@ export function Footer() {
 
           <dl className="grid content-start gap-0 text-sm">
             <FooterRow label="WhatsApp">
-              <a className="hover:text-lime" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
+              <a className="underline-offset-4 hover:underline" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
                 {site.whatsapp.display}
               </a>
             </FooterRow>
             <FooterRow label="E-mail">
               <span className="flex flex-wrap items-center gap-3">
-                <a className="hover:text-lime" href={`mailto:${site.email}`}>
+                <a className="underline-offset-4 hover:underline" href={`mailto:${site.email}`}>
                   {site.email}
                 </a>
                 <CopyButton value={site.email} />
               </span>
             </FooterRow>
             <FooterRow label="Instagram">
-              <a className="hover:text-lime" href={site.instagram.url} target="_blank" rel="noopener noreferrer">
+              <a className="underline-offset-4 hover:underline" href={site.instagram.url} target="_blank" rel="noopener noreferrer">
                 {site.instagram.handle}
               </a>
             </FooterRow>
@@ -54,7 +54,7 @@ export function Footer() {
 
         <nav aria-label="Rodapé" className="mt-16">
           <ul className="flex flex-wrap gap-x-2 gap-y-1">
-            {[{ href: "/", label: "Início" }, ...nav].map((item) => (
+            {nav.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
@@ -69,7 +69,7 @@ export function Footer() {
 
         <p
           aria-hidden="true"
-          className="mt-6 select-none font-display text-[clamp(5rem,22vw,21rem)] leading-[0.8] font-black tracking-[-0.06em] text-foreground/[0.06]"
+          className="mt-6 select-none font-display text-[clamp(5rem,22vw,21rem)] leading-[0.8] font-black tracking-[-0.06em] text-foreground/[0.05]"
         >
           OBEMA
         </p>

@@ -102,7 +102,7 @@ export function ContactForm() {
               <span
                 className={cn(
                   "inline-flex min-h-11 items-center gap-2 rounded-full border border-input bg-card px-4 text-sm transition-colors",
-                  "peer-checked:border-navy peer-checked:bg-navy peer-checked:text-paper",
+                  "peer-checked:border-navy peer-checked:bg-navy peer-checked:text-white",
                   "peer-focus-visible:ring-[3px] peer-focus-visible:ring-ring/40 hover:border-navy/40"
                 )}
               >

@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b1b34",
+  themeColor: "#ffffff",
   viewportFit: "cover",
 };
 
@@ -34,7 +34,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-svh">
         <a
           href="#conteudo"
-          className="fixed top-3 left-3 z-[60] -translate-y-24 rounded-full bg-lime px-5 py-3 text-sm font-semibold text-navy transition-transform focus:translate-y-0"
+          className="fixed top-3 left-3 z-[60] -translate-y-24 rounded-full bg-navy px-5 py-3 text-sm font-semibold text-white transition-transform focus:translate-y-0"
         >
           Pular para o conteúdo
         </a>

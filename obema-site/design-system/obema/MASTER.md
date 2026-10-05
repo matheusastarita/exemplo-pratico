@@ -2,49 +2,53 @@
 
 Fonte de verdade visual do site. Os tokens vivem em `app/globals.css`; este arquivo explica as regras.
 
-## Marca
+## Direção
+
+Minimalista, branco e azul-marinho. A referência é o topo da home: fundo branco, título enorme em azul-marinho e a última linha em cinza-azulado ("agenda cheia.").
 
 - **Tom:** direto, local (Curitiba), sem promessa vazia. "Resultado medido, não prometido."
-- **Símbolo:** o anel verde-limão no lugar do "O" (componente `Logo`).
+- **Marca:** a palavra OBEMA em Archivo bem pesada, sem símbolo.
 
 ## Cores
 
 | Token | Hex | Uso |
 | --- | --- | --- |
-| `navy` | `#0b1b34` | Fundo das seções escuras, texto principal no claro |
+| `navy` | `#0b1b34` | Texto principal, botão principal, seções escuras |
 | `navy-2` | `#122849` | Cards sobre o azul-marinho |
-| `navy-3` | `#1d375f` | Anel de foco no claro, hover |
-| `ink` | `#071222` | Molduras (celular), sombras |
-| `paper` | `#e9edf2` | Fundo claro padrão |
-| `paper-2` | `#dce3ec` | Faixas alternadas no claro |
-| `lime` | `#c9f03c` | Botão principal, destaques, ícones sobre navy |
+| `slate` (`slate-accent`) | `#7d8aa0` | Destaque em títulos grandes (só texto grande) |
+| `muted-foreground` | `#5b6779` | Texto secundário no branco (5,7:1) |
+| `paper` (`muted`) | `#f5f7fa` | Faixas alternadas, bem claras |
+| branco | `#ffffff` | Fundo padrão |
 
 Regras:
-- Verde-limão nunca vira texto sobre fundo claro (contraste baixo). Sobre o claro ele só aparece como preenchimento (botões, selos de ícone).
-- Seções escuras usam a classe `.dark`, que troca todos os tokens do shadcn de uma vez.
-- Texto secundário: `muted-foreground` (#46546b no claro, #a9b3c2 no escuro). Os dois passam de 4,5:1.
+- Sem verde-limão nem brilhos coloridos. A marca é branco e azul.
+- O cinza `slate` não passa de 4,5:1 no branco, então só aparece em títulos grandes. Texto pequeno usa `muted-foreground`.
+- Seções escuras usam a classe `.dark`, que troca os tokens do shadcn de uma vez (botão principal vira branco).
 
 ## Tipografia
 
-- **Títulos:** Archivo (700–900), tracking negativo (-0,035em a -0,045em).
+- **Títulos:** Archivo 800 (extrabold), tracking -0,04em a -0,045em, entrelinha 1,02 a 1,1.
 - **Texto:** Schibsted Grotesk.
-- Escala: `text-hero`, `text-display`, `text-title`, `text-lede` (todas fluidas, com `clamp`).
-- Rótulo de seção: utilitário `eyebrow` (traço + caixa alta espaçada).
+- Rótulo de seção: utilitário `eyebrow` (ponto + caixa alta espaçada), igual à linha "Curitiba · PR · Estúdio de social media · Desde 2023".
+
+## Cabeçalho
+
+Barra de largura total: "OBEMA" à esquerda, links simples com sublinhado na página atual e botão "WhatsApp ↗" com contorno. Transparente no topo; ganha fundo branco com borda ao rolar e fica azul-marinho sobre seções escuras.
 
 ## Forma e espaço
 
-- Raio: `--radius` 1,25rem; botões e cabeçalho em pílula (`rounded-full`).
+- Botões em pílula (`rounded-full`); cards com raio de 1,25rem e borda fina.
 - Container: utilitário `wrap` (máx. 1360px, margem lateral de 16 a 64px).
 - Seções: `py-24 md:py-32`.
 
 ## Movimento
 
-- Portal da home (GlyphPortal) é a única peça com movimento guiado pela rolagem.
+- Portal da home (GlyphPortal): entra pelo "O" azul-marinho e o fundo clareia até o branco do topo.
 - Entradas de bloco: `data-reveal` (CSS `animation-timeline: view()`), sem JavaScript.
-- Tudo respeita `prefers-reduced-motion`: sem animação, conteúdo no estado final.
+- Tudo respeita `prefers-reduced-motion`.
 - Vídeos nunca tocam sozinhos; tocar um pausa os outros.
 
-## Componentes e acessibilidade
+## Acessibilidade
 
 - Alvos de toque com no mínimo 44px.
 - Ícones: lucide-react. Sem emoji como ícone.

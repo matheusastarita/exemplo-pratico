@@ -54,7 +54,7 @@ export function TestimonialVideos({ className }: { className?: string }) {
                     onClick={() => start(i)}
                     className="group absolute inset-0 grid cursor-pointer place-items-center bg-gradient-to-t from-ink/80 via-ink/10 to-transparent"
                   >
-                    <span className="grid size-16 place-items-center rounded-full bg-lime text-navy shadow-lg transition-transform duration-300 ease-brand group-hover:scale-110">
+                    <span className="grid size-16 place-items-center rounded-full bg-white text-navy shadow-lg transition-transform duration-300 ease-brand group-hover:scale-110">
                       <Play className="size-6 translate-x-0.5 fill-current" aria-hidden="true" />
                     </span>
                     <span className="sr-only">Assistir depoimento de {person.name}</span>

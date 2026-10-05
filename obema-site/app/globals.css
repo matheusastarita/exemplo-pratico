@@ -11,52 +11,53 @@
   --navy-3: #1d375f;
   --navy-4: #2b4b7a;
   --ink: #071222;
-  --paper: #e9edf2;
-  --paper-2: #dce3ec;
-  --lime: #c9f03c;
-  --lime-hi: #d9f86e;
+  --paper: #f5f7fa;
+  --paper-2: #eef1f5;
+  /* Cinza-azulado de destaque ("agenda cheia."). Só para texto grande. */
+  --slate: #7d8aa0;
 
   --radius: 1.25rem;
 
-  --background: var(--paper);
+  --background: #ffffff;
   --foreground: var(--navy);
-  --card: #f7f9fb;
+  --card: #ffffff;
   --card-foreground: var(--navy);
-  --popover: #f7f9fb;
+  --popover: #ffffff;
   --popover-foreground: var(--navy);
-  --primary: var(--lime);
-  --primary-foreground: var(--navy);
-  --secondary: var(--navy);
-  --secondary-foreground: #eef2f7;
-  --muted: var(--paper-2);
-  --muted-foreground: #46546b;
-  --accent: var(--paper-2);
+  --primary: var(--navy);
+  --primary-foreground: #ffffff;
+  --secondary: var(--paper-2);
+  --secondary-foreground: var(--navy);
+  --muted: var(--paper);
+  --muted-foreground: #5b6779;
+  --accent: var(--paper);
   --accent-foreground: var(--navy);
   --destructive: #c62828;
-  --border: rgba(11, 27, 52, 0.14);
+  --border: rgba(11, 27, 52, 0.12);
   --input: rgba(11, 27, 52, 0.22);
   --ring: var(--navy-3);
 }
 
 .dark {
   --background: var(--navy);
-  --foreground: #eef2f7;
+  --foreground: #ffffff;
   --card: var(--navy-2);
-  --card-foreground: #eef2f7;
+  --card-foreground: #ffffff;
   --popover: var(--navy-2);
-  --popover-foreground: #eef2f7;
-  --primary: var(--lime);
+  --popover-foreground: #ffffff;
+  --primary: #ffffff;
   --primary-foreground: var(--navy);
-  --secondary: #eef2f7;
-  --secondary-foreground: var(--navy);
+  --secondary: var(--navy-2);
+  --secondary-foreground: #ffffff;
   --muted: var(--navy-2);
   --muted-foreground: #a9b3c2;
   --accent: var(--navy-2);
-  --accent-foreground: #eef2f7;
+  --accent-foreground: #ffffff;
   --destructive: #ff6b6b;
-  --border: rgba(238, 242, 247, 0.14);
-  --input: rgba(238, 242, 247, 0.22);
-  --ring: var(--lime);
+  --border: rgba(255, 255, 255, 0.14);
+  --input: rgba(255, 255, 255, 0.24);
+  --ring: #ffffff;
+  --slate: #8e9bb0;
 }
 
 @theme inline {
@@ -86,8 +87,7 @@
   --color-ink: var(--ink);
   --color-paper: var(--paper);
   --color-paper-2: var(--paper-2);
-  --color-lime: var(--lime);
-  --color-lime-hi: var(--lime-hi);
+  --color-slate-accent: var(--slate);
 
   --font-sans: var(--font-schibsted), -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --font-display: var(--font-archivo), "Arial Narrow", Arial, sans-serif;
@@ -133,8 +133,8 @@
     text-wrap: pretty;
   }
   ::selection {
-    background: var(--lime);
-    color: var(--navy);
+    background: var(--navy);
+    color: #ffffff;
   }
   :focus-visible {
     outline: 2px solid var(--ring);
@@ -166,7 +166,7 @@
 @utility eyebrow {
   display: flex;
   align-items: center;
-  gap: 0.8em;
+  gap: 0.7em;
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 0.74rem;
@@ -175,8 +175,9 @@
   color: var(--muted-foreground);
   &::before {
     content: "";
-    width: 22px;
-    height: 1px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
     background: currentColor;
     flex: none;
   }
@@ -185,8 +186,8 @@
 /* Grade fina sobre o azul-marinho, como no site atual. */
 @utility bg-grid {
   background-image:
-    linear-gradient(rgba(238, 242, 247, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(238, 242, 247, 0.07) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
   background-size: clamp(56px, 6.5vw, 104px) clamp(56px, 6.5vw, 104px);
   background-position: -1px -1px;
 }
@@ -199,16 +200,6 @@
 @keyframes marquee {
   to {
     transform: translateX(-50%);
-  }
-}
-
-@keyframes ping-dot {
-  0% {
-    box-shadow: 0 0 0 0 rgba(201, 240, 60, 0.55);
-  }
-  70%,
-  100% {
-    box-shadow: 0 0 0 9px rgba(201, 240, 60, 0);
   }
 }
 
@@ -243,10 +234,6 @@
   animation-play-state: paused;
 }
 
-.ping-dot {
-  animation: ping-dot 2.4s var(--ease-brand) infinite;
-}
-
 /* ---------- Portal da home (GlyphPortal) ----------
    O componente usa :where() nos próprios estilos, então estas regras
    com classe vencem sem !important. */
@@ -260,10 +247,6 @@
   display: flex;
   justify-content: center;
   margin: 0;
-  font-size: 0.8rem;
-  font-weight: 500;
-  text-align: center;
-  color: var(--navy);
 }
 .home-portal .portal-support {
   position: absolute;
@@ -283,7 +266,7 @@
   justify-content: center;
   gap: 0.5rem;
   font-size: 0.72rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted-foreground);
 }
@@ -293,30 +276,33 @@
 .home-portal [data-gp-caption] {
   inset: calc(var(--gp-word-bottom, 60%) + 84px) 24px auto;
   justify-content: center;
-  font-family: var(--font-display);
 }
 .home-portal [data-gp-enter],
 .home-portal [data-gp-enter]:focus-visible {
-  min-height: 48px;
+  min-height: 46px;
   margin: 0;
   padding: 0 22px;
-  gap: 14px;
+  gap: 12px;
+  border: 1px solid var(--navy);
   border-radius: 999px;
-  background: var(--navy);
-  color: #eef2f7;
+  background: transparent;
+  color: var(--navy);
   font-size: 0.9rem;
-  font-weight: 600;
-  transition: background-color 0.2s;
+  font-weight: 500;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
 }
 .home-portal [data-gp-enter]:hover {
-  background: var(--navy-3);
+  background: var(--navy);
+  color: #ffffff;
 }
 .home-portal [data-gp-enter]:focus-visible {
   outline: 2px solid var(--navy);
   outline-offset: 4px;
 }
 .home-portal [data-gp-content] {
-  padding: 7.5rem 0 4.5rem;
+  padding: 8rem 0 4.5rem;
 }
 @media (max-height: 600px) {
   .home-portal .portal-scroll {

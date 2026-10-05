@@ -21,20 +21,24 @@ export default function ContatoPage() {
     <>
       <PageHero
         eyebrow="Contato"
-        title="Vamos ver o que dá pra fazer com a sua marca?"
+        title={
+          <>
+            Vamos ver o que dá pra fazer <span className="text-slate-accent">com a sua marca?</span>
+          </>
+        }
         lede="Conversa de diagnóstico, sem compromisso. Manda o @ da sua empresa: a gente responde com as duas ou três coisas que faria primeiro."
       />
 
       <section className="py-16 md:py-24" aria-label="Formas de contato">
         <div className="wrap grid gap-6 lg:grid-cols-[1.35fr_1fr]">
           <div className="rounded-xl border border-border bg-card p-6 md:p-10">
-            <h2 className="text-title font-bold tracking-[-0.03em]">Mande uma mensagem</h2>
+            <h2 className="text-title font-extrabold tracking-[-0.03em]">Mande uma mensagem</h2>
             <p className="mt-3 mb-8 text-muted-foreground">Leva um minuto. Só o nome é obrigatório.</p>
             <ContactForm />
           </div>
 
           <aside className="dark flex flex-col gap-6 rounded-xl bg-background p-6 text-foreground md:p-10">
-            <h2 className="text-title font-bold tracking-[-0.03em]">Prefere direto?</h2>
+            <h2 className="text-title font-extrabold tracking-[-0.03em]">Prefere direto?</h2>
             <Button asChild size="lg" className="self-start">
               <a href={whatsappLink(diagnosticMessage)} target="_blank" rel="noopener noreferrer">
                 <MessageCircle aria-hidden="true" />
@@ -44,20 +48,20 @@ export default function ContatoPage() {
             </Button>
             <ul className="mt-2 grid">
               <ContactRow icon={MessageCircle} label="WhatsApp">
-                <a className="hover:text-lime" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
+                <a className="underline-offset-4 hover:underline" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
                   {site.whatsapp.display}
                 </a>
               </ContactRow>
               <ContactRow icon={Mail} label="E-mail">
                 <span className="flex flex-wrap items-center gap-3">
-                  <a className="hover:text-lime" href={`mailto:${site.email}`}>
+                  <a className="underline-offset-4 hover:underline" href={`mailto:${site.email}`}>
                     {site.email}
                   </a>
                   <CopyButton value={site.email} />
                 </span>
               </ContactRow>
               <ContactRow icon={AtSign} label="Instagram">
-                <a className="hover:text-lime" href={site.instagram.url} target="_blank" rel="noopener noreferrer">
+                <a className="underline-offset-4 hover:underline" href={site.instagram.url} target="_blank" rel="noopener noreferrer">
                   {site.instagram.handle}
                 </a>
               </ContactRow>
@@ -88,7 +92,7 @@ function ContactRow({
 }) {
   return (
     <li className="flex gap-4 border-t border-border py-4">
-      <Icon className="mt-0.5 size-5 shrink-0 text-lime" aria-hidden />
+      <Icon className="mt-0.5 size-5 shrink-0 text-muted-foreground" aria-hidden />
       <div className="grid gap-1">
         <span className="text-sm text-muted-foreground">{label}</span>
         <span className="font-medium">{children}</span>

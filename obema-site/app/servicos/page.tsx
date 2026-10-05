@@ -29,7 +29,11 @@ export default function ServicosPage() {
     <>
       <PageHero
         eyebrow="Serviços"
-        title="Oito frentes. Um time só."
+        title={
+          <>
+            Oito frentes. <span className="text-slate-accent">Um time só.</span>
+          </>
+        }
         lede="Da câmera ligada ao relatório fechado, sem repassar seu problema pra cinco fornecedores. Contrate o que precisa agora e amplie quando fizer sentido."
         aside={
           <RemoteImage
@@ -55,7 +59,7 @@ export default function ServicosPage() {
       </PageHero>
 
       {/* Sempre incluído */}
-      <section aria-labelledby="incluido-title" className="border-b border-border bg-card">
+      <section aria-labelledby="incluido-title" className="border-b border-border bg-muted">
         <div className="wrap grid gap-8 py-12 md:grid-cols-[auto_1fr] md:items-center md:gap-16">
           <h2 id="incluido-title" className="eyebrow">
             Sempre incluído
@@ -63,7 +67,7 @@ export default function ServicosPage() {
           <ul className="grid gap-6 sm:grid-cols-3">
             {included.map(({ icon: Icon, title, text }) => (
               <li key={title} className="flex gap-4">
-                <span className="grid size-11 shrink-0 place-items-center rounded-full bg-lime text-navy">
+                <span className="grid size-11 shrink-0 place-items-center rounded-full bg-navy text-white">
                   <Icon className="size-5" aria-hidden="true" />
                 </span>
                 <div>
@@ -90,19 +94,19 @@ export default function ServicosPage() {
               >
                 <div className="flex items-center gap-4 md:flex-col md:items-start">
                   <span className="font-mono text-sm text-muted-foreground">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="grid size-12 place-items-center rounded-2xl bg-navy text-lime">
+                  <span className="grid size-12 place-items-center rounded-2xl bg-navy text-white">
                     <Icon className="size-5" aria-hidden="true" />
                   </span>
                 </div>
                 <div>
-                  <h2 className="text-title font-bold tracking-[-0.03em]">{service.title}</h2>
+                  <h2 className="text-title font-extrabold tracking-[-0.03em]">{service.title}</h2>
                   <p className="mt-4 max-w-[48ch] text-lede text-muted-foreground">{service.description}</p>
                 </div>
                 <div className="flex flex-col justify-between gap-8">
                   <ul className="grid gap-3">
                     {service.includes.map((item) => (
                       <li key={item} className="flex items-start gap-3">
-                        <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-lime text-navy">
+                        <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-navy text-white">
                           <Check className="size-3" aria-hidden="true" />
                         </span>
                         {item}
@@ -127,7 +131,7 @@ export default function ServicosPage() {
       </section>
 
       {/* Método */}
-      <section id="como-funciona" className="scroll-mt-24 bg-paper-2/60 py-24 md:py-32" aria-labelledby="como-title">
+      <section id="como-funciona" className="scroll-mt-24 bg-muted py-24 md:py-32" aria-labelledby="como-title">
         <div className="wrap">
           <SectionHeading
             eyebrow="Como funciona"

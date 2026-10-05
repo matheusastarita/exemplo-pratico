@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 
@@ -11,10 +11,16 @@ import { diagnosticMessage, site, whatsappLink } from "@/lib/site";
 
 const WORD = "OBEMA";
 
+/** Mesmo smoothstep do GlyphPortal: 0 antes de `a`, 1 depois de `b`. */
+const smooth = (a: number, b: number, n: number) => {
+  const t = Math.min(1, Math.max(0, (n - a) / (b - a)));
+  return t * t * (3 - 2 * t);
+};
+
 /**
  * Abertura da home: a palavra OBEMA vira a porta do estúdio. Rolando, a
- * câmera entra pelo "O" e o azul-marinho de dentro das letras vira o fundo
- * do texto principal.
+ * câmera entra pelo "O" azul-marinho e, do outro lado da letra, o fundo
+ * clareia até o branco do topo da página.
  *
  * O GlyphPortal mede a tinta da fonte na montagem, então ele é remontado
  * (via `key`) assim que a Archivo termina de carregar. Até lá, a primeira
@@ -23,6 +29,7 @@ const WORD = "OBEMA";
 export function HomePortal({ fontFamily }: { fontFamily: string }) {
   const primary = fontFamily.split(",")[0].trim();
   const [fontReady, setFontReady] = useState(false);
+  const fieldRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -37,6 +44,11 @@ export function HomePortal({ fontFamily }: { fontFamily: string }) {
     };
   }, [primary]);
 
+  // Chamado a cada quadro de rolagem, direto no DOM (sem estado do React).
+  const handleProgress = useCallback((progress: number) => {
+    fieldRef.current?.style.setProperty("--to-white", String(smooth(0.58, 0.8, progress)));
+  }, []);
+
   return (
     <GlyphPortal
       key={fontReady ? "ready" : "pending"}
@@ -49,12 +61,13 @@ export function HomePortal({ fontFamily }: { fontFamily: string }) {
       enterLabel="Entrar no estúdio"
       className="home-portal"
       style={{
-        "--gp-paper": "var(--paper)",
+        "--gp-paper": "#ffffff",
         "--gp-ink": "var(--navy)",
-        "--gp-field": "var(--navy)",
-        "--gp-foreground": "#eef2f7",
+        "--gp-field": "#ffffff",
+        "--gp-foreground": "var(--navy)",
       }}
-      background={<PortalField />}
+      onProgress={handleProgress}
+      background={<PortalField fieldRef={fieldRef} />}
       front={<PortalFront />}
     >
       <PortalContent />
@@ -62,18 +75,18 @@ export function HomePortal({ fontFamily }: { fontFamily: string }) {
   );
 }
 
-/** O que aparece dentro das letras e, depois, atrás do texto principal. */
-function PortalField() {
+/** Azul-marinho dentro das letras, que vira branco depois da travessia. */
+function PortalField({ fieldRef }: { fieldRef: React.RefObject<HTMLDivElement | null> }) {
   return (
     <div
+      ref={fieldRef}
       className="absolute inset-0"
       style={{
         transform: "scale(var(--gp-field-scale, 1))",
-        background:
-          "radial-gradient(circle at 20% 22%, rgba(201,240,60,.34), transparent 30%), radial-gradient(circle at 78% 28%, rgba(43,75,122,.95), transparent 42%), radial-gradient(circle at 55% 100%, rgba(201,240,60,.14), transparent 42%), linear-gradient(140deg, #0b1b34 0%, #122849 55%, #071222 100%)",
+        background: "linear-gradient(150deg, #122849 0%, #0b1b34 55%, #071222 100%)",
       }}
     >
-      <div className="bg-grid absolute inset-0 opacity-70 [mask-image:radial-gradient(ellipse_80%_70%_at_70%_30%,#000,transparent_80%)]" />
+      <div className="absolute inset-0 bg-white" style={{ opacity: "var(--to-white, 0)" }} />
     </div>
   );
 }
@@ -83,9 +96,8 @@ function PortalFront() {
   return (
     <>
       <p className="portal-eyebrow">
-        <span className="inline-flex items-center gap-2.5 rounded-full border border-navy/15 bg-card/70 px-4 py-2 backdrop-blur-sm">
-          <span className="ping-dot size-2 rounded-full bg-lime ring-1 ring-navy/20" aria-hidden="true" />
-          Estúdio de social media · {site.city.split(" ·")[0]} · desde {site.since}
+        <span className="font-display text-[0.72rem] font-semibold tracking-[0.18em] text-muted-foreground uppercase">
+          Estúdio de social media · {site.city.split(" ·")[0]}
         </span>
       </p>
       <p className="portal-support">Gestão de Instagram, vídeo e estratégia num time só.</p>
@@ -97,19 +109,27 @@ function PortalFront() {
   );
 }
 
-/** Texto principal, revelado depois que a câmera atravessa a letra. */
+const meta = [site.city, "Estúdio de social media", `Desde ${site.since}`];
+
+/** Topo da home, revelado depois que a câmera atravessa a letra. */
 function PortalContent() {
   return (
-    <div className="dark wrap">
-      <p className="inline-flex items-center gap-2.5 rounded-full border border-lime/40 bg-lime/[0.06] px-4 py-2 font-display text-xs font-semibold tracking-[0.12em] text-lime uppercase">
-        <span className="size-2 rounded-full bg-lime" aria-hidden="true" />
-        OBEMA Marketing · {site.city}
-      </p>
-      <h1 className="mt-7 max-w-[13ch] text-hero font-bold tracking-[-0.045em] text-foreground">
-        Presença digital que vira <span className="text-lime">agenda cheia.</span>
+    <div className="wrap">
+      <ul className="flex flex-wrap gap-x-7 gap-y-2 font-display text-[0.72rem] font-semibold tracking-[0.16em] text-muted-foreground uppercase">
+        {meta.map((item, i) => (
+          <li key={item} className="flex items-center gap-2.5">
+            <span aria-hidden="true" className={i === 0 ? "size-1.5 rounded-full bg-navy" : "size-1.5 rounded-full bg-slate-accent"} />
+            {item}
+          </li>
+        ))}
+      </ul>
+      <h1 className="mt-10 font-display text-[clamp(2.75rem,0.7rem+7.7vw,9rem)] leading-[1.1] font-extrabold tracking-[-0.045em] text-navy">
+        <span className="block">Presença digital</span>
+        <span className="block">que vira</span>
+        <span className="block text-slate-accent">agenda cheia.</span>
       </h1>
-      <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
-        <p className="max-w-[44ch] text-lede text-muted-foreground">
+      <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+        <p className="max-w-[46ch] text-lede text-muted-foreground">
           Gestão de Instagram, vídeo e estratégia num time só. Acompanhamento semanal e relatório de resultado todo mês.
         </p>
         <div className="flex flex-wrap gap-3">
@@ -124,10 +144,10 @@ function PortalContent() {
           </Button>
         </div>
       </div>
-      <dl className="mt-12 grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-border bg-border md:mt-14">
+      <dl className="mt-16 grid grid-cols-3 border-t border-border">
         {facts.map((fact) => (
-          <div key={fact.value} className="flex flex-col gap-1 bg-navy/85 p-3.5 backdrop-blur-sm sm:p-5 md:p-6">
-            <dt className="font-display text-lg font-bold tracking-tight text-foreground sm:text-2xl">{fact.value}</dt>
+          <div key={fact.value} className="flex flex-col gap-1 pt-5 pr-4">
+            <dt className="font-display text-lg font-bold tracking-tight sm:text-2xl">{fact.value}</dt>
             <dd className="text-xs text-muted-foreground sm:text-sm">{fact.label}</dd>
           </div>
         ))}
