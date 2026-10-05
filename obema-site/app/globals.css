@@ -1,0 +1,325 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Seções azul-marinho usam a classe .dark para inverter os tokens do shadcn. */
+@custom-variant dark (&:is(.dark *, .dark));
+
+/* ---------- Tokens da marca OBEMA ---------- */
+:root {
+  --navy: #0b1b34;
+  --navy-2: #122849;
+  --navy-3: #1d375f;
+  --navy-4: #2b4b7a;
+  --ink: #071222;
+  --paper: #e9edf2;
+  --paper-2: #dce3ec;
+  --lime: #c9f03c;
+  --lime-hi: #d9f86e;
+
+  --radius: 1.25rem;
+
+  --background: var(--paper);
+  --foreground: var(--navy);
+  --card: #f7f9fb;
+  --card-foreground: var(--navy);
+  --popover: #f7f9fb;
+  --popover-foreground: var(--navy);
+  --primary: var(--lime);
+  --primary-foreground: var(--navy);
+  --secondary: var(--navy);
+  --secondary-foreground: #eef2f7;
+  --muted: var(--paper-2);
+  --muted-foreground: #46546b;
+  --accent: var(--paper-2);
+  --accent-foreground: var(--navy);
+  --destructive: #c62828;
+  --border: rgba(11, 27, 52, 0.14);
+  --input: rgba(11, 27, 52, 0.22);
+  --ring: var(--navy-3);
+}
+
+.dark {
+  --background: var(--navy);
+  --foreground: #eef2f7;
+  --card: var(--navy-2);
+  --card-foreground: #eef2f7;
+  --popover: var(--navy-2);
+  --popover-foreground: #eef2f7;
+  --primary: var(--lime);
+  --primary-foreground: var(--navy);
+  --secondary: #eef2f7;
+  --secondary-foreground: var(--navy);
+  --muted: var(--navy-2);
+  --muted-foreground: #a9b3c2;
+  --accent: var(--navy-2);
+  --accent-foreground: #eef2f7;
+  --destructive: #ff6b6b;
+  --border: rgba(238, 242, 247, 0.14);
+  --input: rgba(238, 242, 247, 0.22);
+  --ring: var(--lime);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-navy: var(--navy);
+  --color-navy-2: var(--navy-2);
+  --color-navy-3: var(--navy-3);
+  --color-navy-4: var(--navy-4);
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-lime: var(--lime);
+  --color-lime-hi: var(--lime-hi);
+
+  --font-sans: var(--font-schibsted), -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-display: var(--font-archivo), "Arial Narrow", Arial, sans-serif;
+
+  --text-hero: clamp(2.6rem, 0.55rem + 5.7vw, 7.2rem);
+  --text-hero--line-height: 0.92;
+  --text-display: clamp(2.15rem, 1.1rem + 3.6vw, 4.6rem);
+  --text-display--line-height: 0.98;
+  --text-title: clamp(1.75rem, 1.2rem + 1.9vw, 3rem);
+  --text-title--line-height: 1.05;
+  --text-lede: clamp(1.05rem, 0.96rem + 0.4vw, 1.3rem);
+  --text-lede--line-height: 1.5;
+
+  --radius-sm: calc(var(--radius) - 8px);
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
+
+  --ease-brand: cubic-bezier(0.16, 0.84, 0.24, 1);
+}
+
+/* ---------- Base ---------- */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  ::selection {
+    background: var(--lime);
+    color: var(--navy);
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ---------- Utilitários da marca ---------- */
+@utility wrap {
+  width: 100%;
+  max-width: 1360px;
+  margin-inline: auto;
+  padding-inline: clamp(16px, 4vw, 64px);
+}
+
+/* Rótulo de seção: traço + caixa alta espaçada. */
+@utility eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.74rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  &::before {
+    content: "";
+    width: 22px;
+    height: 1px;
+    background: currentColor;
+    flex: none;
+  }
+}
+
+/* Grade fina sobre o azul-marinho, como no site atual. */
+@utility bg-grid {
+  background-image:
+    linear-gradient(rgba(238, 242, 247, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(238, 242, 247, 0.07) 1px, transparent 1px);
+  background-size: clamp(56px, 6.5vw, 104px) clamp(56px, 6.5vw, 104px);
+  background-position: -1px -1px;
+}
+
+@utility bg-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- Movimento ---------- */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes ping-dot {
+  0% {
+    box-shadow: 0 0 0 0 rgba(201, 240, 60, 0.55);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 9px rgba(201, 240, 60, 0);
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Revelação guiada pela rolagem, só em CSS. Sem suporte ou com movimento
+   reduzido, o conteúdo aparece direto no estado final. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-reveal] {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 24%;
+    }
+  }
+}
+
+.marquee-track {
+  animation: marquee 38s linear infinite;
+}
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
+.ping-dot {
+  animation: ping-dot 2.4s var(--ease-brand) infinite;
+}
+
+/* ---------- Portal da home (GlyphPortal) ----------
+   O componente usa :where() nos próprios estilos, então estas regras
+   com classe vencem sem !important. */
+.home-portal {
+  font-family: var(--font-sans);
+}
+.home-portal .portal-eyebrow {
+  position: absolute;
+  inset-inline: 16px;
+  bottom: calc(100% - var(--gp-word-top, 35%) + 28px);
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-align: center;
+  color: var(--navy);
+}
+.home-portal .portal-support {
+  position: absolute;
+  inset-inline: 24px;
+  top: calc(var(--gp-word-bottom, 60%) + 24px);
+  margin: 0;
+  text-align: center;
+  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.25rem);
+  color: var(--muted-foreground);
+}
+.home-portal .portal-scroll {
+  position: absolute;
+  inset-inline: 24px;
+  bottom: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.home-portal [data-gp-hint] {
+  display: none;
+}
+.home-portal [data-gp-caption] {
+  inset: calc(var(--gp-word-bottom, 60%) + 84px) 24px auto;
+  justify-content: center;
+  font-family: var(--font-display);
+}
+.home-portal [data-gp-enter],
+.home-portal [data-gp-enter]:focus-visible {
+  min-height: 48px;
+  margin: 0;
+  padding: 0 22px;
+  gap: 14px;
+  border-radius: 999px;
+  background: var(--navy);
+  color: #eef2f7;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+.home-portal [data-gp-enter]:hover {
+  background: var(--navy-3);
+}
+.home-portal [data-gp-enter]:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 4px;
+}
+.home-portal [data-gp-content] {
+  padding: 7.5rem 0 4.5rem;
+}
+@media (max-height: 600px) {
+  .home-portal .portal-scroll {
+    display: none;
+  }
+}
