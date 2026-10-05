@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { PhoneFrame } from "@/components/site/phone-frame";
+import { asset } from "@/lib/asset";
 import { jmCase } from "@/lib/content";
 
 export function CaseHighlight() {
@@ -42,7 +43,7 @@ export function CaseHighlight() {
         <figure className="relative">
           <PhoneFrame>
             <Image
-              src="/media/jm-print.webp"
+              src={asset("/media/jm-print.webp")}
               alt="Perfil do Instituto J. Mortensen no Instagram depois do trabalho da OBEMA, com bio organizada, destaques e feed com identidade visual verde"
               fill
               sizes="300px"

@@ -50,6 +50,13 @@ design-system/obema/  regras visuais da marca (MASTER.md)
 
 `components/ui` é a pasta padrão do shadcn. O `components.json` aponta para ela, então `npx shadcn@latest add <componente>` instala novos componentes no lugar certo, ao lado dos que já existem.
 
+## Publicação (GitHub Pages)
+
+O workflow `.github/workflows/deploy-pages.yml` publica o site sozinho em
+**https://matheusastarita.github.io/exemplo-pratico/** sempre que algo dentro de `obema-site/` entra no branch principal. Para publicar de novo na mão, use **Actions → Publicar site da OBEMA no GitHub Pages → Run workflow**.
+
+Nesse modo o Next gera arquivos estáticos (`output: "export"`) com o prefixo `/exemplo-pratico`. Imagens e vídeos de `public/` devem usar o `asset()` de `lib/asset.ts` para receber esse prefixo.
+
 ## Observações
 
 - O site é 100% estático: não tem banco de dados nem back-end. O formulário de contato só monta a mensagem e abre o WhatsApp da OBEMA.

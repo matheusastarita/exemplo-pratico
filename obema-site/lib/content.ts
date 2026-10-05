@@ -14,6 +14,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+import { asset } from "@/lib/asset";
+
 export type Service = {
   slug: string;
   title: string;
@@ -192,22 +194,22 @@ export const testimonials = [
     name: "Valdir",
     company: "VAVÁ Barbearia",
     city: "Curitiba, PR",
-    poster: "/media/valdir-poster.jpg",
-    video: "/media/valdir.mp4",
+    poster: asset("/media/valdir-poster.jpg"),
+    video: asset("/media/valdir.mp4"),
   },
   {
     name: "Rodolfo",
     company: null,
     city: "Curitiba, PR",
-    poster: "/media/rodolfo-poster.jpg",
-    video: "/media/rodolfo.mp4",
+    poster: asset("/media/rodolfo-poster.jpg"),
+    video: asset("/media/rodolfo.mp4"),
   },
   {
     name: "Edson",
     company: null,
     city: "Curitiba, PR",
-    poster: "/media/edson-poster.jpg",
-    video: "/media/edson.mp4",
+    poster: asset("/media/edson-poster.jpg"),
+    video: asset("/media/edson.mp4"),
   },
 ];
 

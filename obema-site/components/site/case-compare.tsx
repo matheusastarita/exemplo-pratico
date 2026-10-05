@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { PhoneFrame } from "@/components/site/phone-frame";
+import { asset } from "@/lib/asset";
 import { jmCase } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
@@ -53,7 +54,7 @@ export function CaseCompare() {
         <PhoneFrame className="w-[min(78vw,300px)]">
           {view === "depois" ? (
             <Image
-              src="/media/jm-print.webp"
+              src={asset("/media/jm-print.webp")}
               alt="Perfil do Instituto J. Mortensen no Instagram depois do trabalho da OBEMA: bio organizada, destaques com função e feed com identidade visual verde"
               fill
               sizes="300px"
