@@ -279,6 +279,8 @@ export type CreatedReservation = {
   area_name: string | null;
   area_matched: boolean;
   deposit_amount: number | null;
+  /** Texto da confirmação enviada (simulada na demonstração). */
+  message: string | null;
 };
 
 export type PublicReservation = {
@@ -561,6 +563,10 @@ export type Database = {
         CreatedReservation
       >;
       get_reservation_public: Fn<{ p_code: string; p_phone: string }, PublicReservation>;
+      get_available_slots_for_change: Fn<
+        { p_code: string; p_phone: string; p_date: string; p_party_size: number },
+        AvailableSlot[]
+      >;
       cancel_reservation_public: Fn<
         { p_code: string; p_phone: string; p_reason?: string | null },
         PublicReservation

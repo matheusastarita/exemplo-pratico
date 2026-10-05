@@ -1287,8 +1287,33 @@ begin
     'customer_name', c.full_name,
     'area_name', v_area_name,
     'area_matched', p_area is null or p_area = v_option.area_id,
-    'deposit_amount', v_deposit
+    'deposit_amount', v_deposit,
+    -- texto da confirmação (simulada na demo) — só da própria reserva
+    'message', (select m.body from public.message_log m
+                where m.reservation_id = v_id and m.kind = 'confirmacao'
+                order by m.created_at desc limit 1)
   );
+end;
+$$;
+
+-- Horários livres para ALTERAR uma reserva: confere código + telefone e não conta
+-- a mesa da própria reserva como ocupada.
+create or replace function public.get_available_slots_for_change(
+  p_code text,
+  p_phone text,
+  p_date date,
+  p_party_size int
+)
+returns table (slot_time time, shift_name text, tables_left int)
+language plpgsql
+security definer
+stable
+set search_path = public
+as $$
+declare
+  r public.reservations := public.find_reservation_by_code(p_code, p_phone);
+begin
+  return query select * from public.compute_slots(p_date, p_party_size, null, true, r.id);
 end;
 $$;
 
@@ -1419,7 +1444,7 @@ begin
   if r.status not in ('pending', 'confirmed') or r.ends_at < public.sp_now() then
     raise exception 'not_confirmable';
   end if;
-  update public.reservations set confirmed_by_customer_at = now() where id = r.id;
+  update public.reservations set confirmed_by_customer_at = coalesce(confirmed_by_customer_at, now()) where id = r.id;
   return public.reservation_public_json(r.id);
 end;
 $$;
@@ -2975,6 +3000,7 @@ grant execute on function public.get_reservation_public(text, text) to anon, aut
 grant execute on function public.cancel_reservation_public(text, text, text) to anon, authenticated;
 grant execute on function public.confirm_presence_public(text, text) to anon, authenticated;
 grant execute on function public.change_reservation_public(text, text, date, time, int) to anon, authenticated;
+grant execute on function public.get_available_slots_for_change(text, text, date, int) to anon, authenticated;
 grant execute on function public.pay_deposit_public(text, text) to anon, authenticated;
 grant execute on function public.join_waitlist_public(date, int, text, text, time, time, boolean, text, text) to anon, authenticated;
 

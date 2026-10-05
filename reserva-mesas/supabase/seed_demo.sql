@@ -468,11 +468,11 @@ begin
          case when x.s = 'cancelled' then 'Mudança de planos' end
   from (values
     (v_today - 82, time '20:00', 2, 'completed', 'casal', null),
-    (v_today - 61, time '13:00', 4, 'completed', 'familia', 'Vamos com minha mãe.'),
-    (v_today - 47, time '20:30', 2, 'completed', null, null),
+    (v_today - 60, time '13:00', 4, 'completed', 'familia', 'Vamos com minha mãe.'),
+    (v_today - 45, time '20:30', 2, 'completed', null, null),
     (v_today - 33, time '20:00', 2, 'cancelled', null, null),
-    (v_today - 26, time '12:45', 3, 'completed', null, null),
-    (v_today - 12, time '20:15', 2, 'completed', 'casal', 'Mesa na varanda, se possível.'),
+    (v_today - 23, time '12:45', 3, 'completed', null, null),
+    (v_today - 9, time '20:15', 2, 'completed', 'casal', 'Mesa na varanda, se possível.'),
     (v_today + 3, time '20:00', 2, 'confirmed', 'casal', 'Mesa na varanda, se possível.'),
     (v_today + 11, time '13:00', 5, 'confirmed', 'familia', 'Almoço de família — uma cadeirinha de bebê.')
   ) as x(d, t, p, s, o, n)
