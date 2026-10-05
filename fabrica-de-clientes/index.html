@@ -1,0 +1,835 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fábrica de Clientes: crie e venda sistemas de agendamento</title>
+<meta name="description" content="Curso em texto com Starter Kit: construa um sistema de agendamento para negócios locais e aprenda a prospectar, propor e cobrar. Sem promessa de renda.">
+<!-- Troque [[PREENCHER:DOMINIO]] pelo domínio final (ex.: fabricadeclientes.com.br) em todas as ocorrências. -->
+<link rel="canonical" href="https://[[PREENCHER:DOMINIO]]/">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FAFAFA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#151515" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Fábrica de Clientes">
+<meta property="og:title" content="Fábrica de Clientes: construa e aprenda a vender sistemas de agendamento">
+<meta property="og:description" content="Curso em texto, com Starter Kit e ferramentas para prospectar, propor e acompanhar. Para quem quer atender barbearias, salões e estúdios. Sem promessa de resultado.">
+<meta property="og:url" content="https://[[PREENCHER:DOMINIO]]/">
+<meta property="og:image" content="https://[[PREENCHER:DOMINIO]]/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Fábrica de Clientes. Curso em texto: construa sistemas de agendamento e aprenda a vendê-los para negócios locais.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fábrica de Clientes: construa e aprenda a vender sistemas de agendamento">
+<meta name="twitter:description" content="Curso em texto, com Starter Kit e ferramentas para prospectar, propor e acompanhar. Sem promessa de resultado.">
+<meta name="twitter:image" content="https://[[PREENCHER:DOMINIO]]/img/og-image.png">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700..800&family=Instrument+Sans:wght@400..600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/styles.css">
+<script>document.documentElement.classList.add('js')</script>
+<script src="js/config.js" defer></script>
+<script src="js/main.js" defer></script>
+
+<!-- Dados estruturados: sem avaliação (aggregateRating) de propósito. Preencha preço e autor. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Fábrica de Clientes",
+  "description": "Curso prático em texto, com Starter Kit, que ensina a construir um sistema de agendamento online (GitHub, Vercel, Next.js, Supabase, Resend e Claude Code) e a vender o serviço por mensalidade para negócios locais.",
+  "inLanguage": "pt-BR",
+  "url": "https://[[PREENCHER:DOMINIO]]/",
+  "image": "https://[[PREENCHER:DOMINIO]]/img/og-image.png",
+  "provider": {
+    "@type": "Person",
+    "name": "[[PREENCHER: nome do autor]]",
+    "url": "https://[[PREENCHER:DOMINIO]]/"
+  },
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "Online"
+  },
+  "syllabusSections": [
+    { "@type": "Syllabus", "name": "Fundação da stack", "description": "11 lições: contas, Node, Git, GitHub, variáveis de ambiente e fluxo com Claude Code." },
+    { "@type": "Syllabus", "name": "Banco de dados", "description": "9 lições: modelagem, trava contra horário duplicado, regras no banco e testes." },
+    { "@type": "Syllabus", "name": "Interface do cliente", "description": "8 lições: fluxo de agendamento, horários livres, conflitos e acessibilidade." },
+    { "@type": "Syllabus", "name": "Painel do dono", "description": "9 lições: login, papéis, RLS, painel e teste de segurança com duas contas." },
+    { "@type": "Syllabus", "name": "E-mails automáticos", "description": "7 lições: Resend, domínio verificado, confirmação, lembrete e cancelamento." },
+    { "@type": "Syllabus", "name": "Deploy e produção", "description": "8 lições: deploy, domínio, checklist de entrega, 15 testes e monitoramento." },
+    { "@type": "Syllabus", "name": "Primeiro cliente", "description": "9 lições: prospecção, abordagem por canal, oferta de entrada e entrega." },
+    { "@type": "Syllabus", "name": "Preço e escala", "description": "10 lições: mensalidade, custos reais, margem, pacotes, negociação e cobrança." },
+    { "@type": "Syllabus", "name": "Caso completo", "description": "10 lições: uma venda inteira com as conversas escritas (caso ilustrativo)." },
+    { "@type": "Syllabus", "name": "Operação e suporte", "description": "7 lições: rotina, backup, LGPD na prática, suporte, incidentes e relatório." },
+    { "@type": "Syllabus", "name": "Escala e nichos", "description": "7 lições: nicho, padronização, prova social, captação e multi-tenant." },
+    { "@type": "Syllabus", "name": "Playbooks por nicho", "description": "9 lições: barbearia, salão, tatuagem, estética, pet shop, estúdios, quadras e validação." }
+  ],
+  "offers": {
+    "@type": "Offer",
+    "category": "Paid",
+    "price": "[[PREENCHER: preço sem R$, ex. 497.00]]",
+    "priceCurrency": "BRL",
+    "availability": "https://schema.org/InStock",
+    "url": "https://[[PREENCHER:DOMINIO]]/#oferta"
+  }
+}
+</script>
+</head>
+<body>
+
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="progress" aria-hidden="true"><span></span></div>
+
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <a class="brand" href="#topo">Fábrica de Clientes</a>
+    <a class="btn btn--primary btn--sm" href="#oferta">Quero entrar</a>
+  </div>
+</header>
+
+<main id="conteudo">
+
+  <!-- 1. DOBRA PRINCIPAL -->
+  <section class="hero" id="topo" aria-labelledby="hero-title">
+    <div class="wrap">
+      <p class="label">Curso em texto · 12 módulos · 104 lições · Starter Kit</p>
+      <h1 id="hero-title">Construa sistemas de agendamento e aprenda a <span class="nowrap">vendê-los</span> para os negócios da sua cidade.</h1>
+      <p class="hero__lede">Um curso em texto, com o código pronto para partir (o Starter Kit) e as ferramentas para prospectar, montar a proposta e acompanhar cada cliente. Para quem quer construir o sistema e também saber quem procurar, o que dizer e quanto cobrar.</p>
+
+      <div class="cta-row">
+        <a class="btn btn--primary btn--lg" href="#oferta" data-checkout data-cta="hero">Quero entrar no curso</a>
+        <a class="btn btn--ghost btn--lg" href="#conteudo-completo">Ver o conteúdo completo</a>
+      </div>
+      <p class="cta-note">R$ <mark class="todo">[[PREENCHER: preço à vista]]</mark> à vista ou <mark class="todo">[[PREENCHER: parcelamento]]</mark> · Garantia de <mark class="todo">[[PREENCHER: dias de garantia]]</mark> dias · Pagamento pela Kiwify</p>
+      <p class="fine">Curso em texto. Não garantimos resultados.</p>
+
+      <ul class="takeaways">
+        <li>12 módulos e 104 lições, do GitHub vazio ao sistema no ar com domínio próprio.</li>
+        <li>Starter Kit: um sistema de agendamento completo em Next.js e Supabase, para adaptar a cada cliente.</li>
+        <li>O lado comercial: quem abordar, o que dizer, como montar preço com mensalidade.</li>
+        <li>Ferramentas de trabalho: funil de prospecção, gerador de proposta, mockup para o prospect.</li>
+      </ul>
+    </div>
+
+    <div class="wrap">
+      <figure class="shot hero__shot">
+        <!--
+          Quando tiver a captura real, troque a <div class="todo-img"> abaixo por:
+          <img src="img/area-de-membros.webp" width="1600" height="1000" alt="[texto do alt em textos-de-apoio.md]" fetchpriority="high" decoding="async">
+          (esta é a única imagem SEM loading="lazy", porque aparece na primeira tela)
+        -->
+        <div class="shot__frame shot__frame--wide">
+          <div class="todo-img" role="img" aria-label="Espaço reservado para a captura da área de membros">[[IMAGEM: captura real da área de membros: página inicial com a lista de módulos e o progresso salvo]]</div>
+        </div>
+        <figcaption>Área de membros: progresso salvo, busca e tema claro ou escuro.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 2. O PROBLEMA -->
+  <section class="section" id="problema" aria-labelledby="problema-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="label"><span class="n">01</span> O problema</p>
+        <h2 id="problema-title">O problema tem duas pontas.</h2>
+      </header>
+
+      <div class="split">
+        <div class="split__col">
+          <h3>Do lado do dono do negócio</h3>
+          <p>A agenda mora no WhatsApp, no Direct e num caderno no balcão. O dono atende com o celular vibrando: “tem horário hoje?”, “dá pra trocar pra amanhã?”, “ainda tem vaga às 18h?”. Quando alguém esquece e não aparece, a cadeira fica vazia, e aquele horário não volta.</p>
+
+          <div class="example">
+            <p class="tag">Exemplo ilustrativo · números hipotéticos</p>
+            <table class="table">
+              <caption>Barbearia do Zé (personagem fictício): quanto custam as faltas</caption>
+              <tbody>
+                <tr><th scope="row">Faltas por semana</th><td class="num">4</td></tr>
+                <tr><th scope="row">Preço médio do corte</th><td class="num">R$ 40</td></tr>
+                <tr><th scope="row">Perdido por semana</th><td class="num">R$ 160</td></tr>
+                <tr><th scope="row">Perdido em 4 semanas</th><td class="num">R$ 640</td></tr>
+              </tbody>
+            </table>
+            <p class="example__note">A conta só mostra o raciocínio. Com um prospect de verdade, você usa os números dele; a área de membros tem uma Calculadora de ROI para isso.</p>
+          </div>
+        </div>
+
+        <div class="split__col">
+          <h3>Do lado de quem quer vender</h3>
+          <p>Você sabe fazer o sistema, ou consegue aprender. O que trava é o resto:</p>
+          <ul class="voices">
+            <li>“Sei fazer, mas não sei vender.”</li>
+            <li>“Já tentei prospectar e ninguém respondeu.”</li>
+            <li>“Não sei quanto cobrar nem como cobrar mensalidade.”</li>
+            <li>“Tenho medo de entregar algo que quebra com cliente de verdade.”</li>
+          </ul>
+          <p>Tutorial de programação para no deploy. A conversa com o dono da barbearia fica por sua conta.</p>
+        </div>
+      </div>
+
+      <p class="statement">O sistema que você constrói é só metade. <span>A outra metade é saber quem procurar, o que dizer e quanto cobrar. A Fábrica de Clientes ensina as duas, com as ferramentas para fazer no dia a dia.</span></p>
+    </div>
+  </section>
+
+  <!-- 3. A SOLUÇÃO EM 3 ETAPAS -->
+  <section class="section" id="caminho" aria-labelledby="caminho-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="label"><span class="n">02</span> O caminho</p>
+        <h2 id="caminho-title">Três etapas: construir, vender, operar e crescer.</h2>
+        <p class="lede">Você pode construir do zero, lição por lição, ou partir do Starter Kit e adaptar. Nos dois casos, o caminho é o mesmo.</p>
+      </header>
+
+      <ol class="steps">
+        <li class="step">
+          <p class="step__meta">Etapa 1 · Módulos 1 a 6 · 52 lições</p>
+          <h3>Construir</h3>
+          <p><strong>Ao fim, você tem</strong> um sistema de agendamento no ar, com domínio, área do cliente, painel do dono e e-mails automáticos, depois de passar por um roteiro de 15 testes antes de entregar.</p>
+        </li>
+        <li class="step">
+          <p class="step__meta">Etapa 2 · Módulos 7 a 9 · 29 lições</p>
+          <h3>Vender</h3>
+          <p><strong>Ao fim, você tem</strong> critérios para escolher quem abordar, mensagens por canal, uma oferta de entrada, uma tabela de preço com mensalidade e uma proposta pronta para enviar. E uma venda inteira, conversa por conversa, para consultar.</p>
+        </li>
+        <li class="step">
+          <p class="step__meta">Etapa 3 · Módulos 10 a 12 · 23 lições</p>
+          <h3>Operar e crescer</h3>
+          <p><strong>Ao fim, você tem</strong> uma rotina semanal de manutenção, backup e suporte, um plano para incidentes, o relatório mensal do cliente e um playbook para o nicho que escolher.</p>
+        </li>
+      </ol>
+
+      <figure class="stack-fig">
+        <p class="tag">A stack, em uma linha</p>
+        <ol class="stack" aria-label="Como as peças se ligam">
+          <li><span class="stack__name">Seu computador</span><span class="stack__role">você e o Claude Code escrevem o código</span></li>
+          <li><span class="stack__name">GitHub</span><span class="stack__role">guarda o código e o histórico</span></li>
+          <li><span class="stack__name">Vercel · Next.js</span><span class="stack__role">publica o site do cliente</span></li>
+          <li><span class="stack__name">Supabase</span><span class="stack__role">banco de dados e login</span></li>
+        </ol>
+        <p class="stack__extra"><span class="stack__name">+ Resend</span><span class="stack__role">envia os e-mails de confirmação e lembrete</span></p>
+        <figcaption>Você escreve o código com ajuda do Claude Code e guarda no GitHub. A Vercel publica o site feito em Next.js, o Supabase guarda os dados e o login, e o Resend envia os e-mails.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 4. O QUE TEM DENTRO -->
+  <section class="section" id="conteudo-completo" aria-labelledby="conteudo-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="label"><span class="n">03</span> O conteúdo</p>
+        <h2 id="conteudo-title">O que tem dentro: 12 módulos, 104 lições.</h2>
+        <p class="lede">Tudo em texto, com imagens, tabelas e código pronto para copiar. Cada módulo tem entregas concretas para você conferir o que fez.</p>
+      </header>
+
+      <div class="acc" data-accordion>
+        <h3 class="acc__group">Etapa 1 · Construir</h3>
+
+        <div class="acc__item">
+          <h4><button class="acc__btn" type="button" aria-expanded="false" aria-controls="m1"><span class="acc__num">01</span><span class="acc__text"><span class="acc__title">Fundação da stack</span><span class="acc__meta">11 lições</span></span><span class="acc__icon" aria-hidden="true"></span></button></h4>
+          <div class="acc__panel" id="m1" hidden><p>Você cria e protege as contas que vai usar, instala Node e Git, aprende o básico do terminal e põe o projeto para rodar no seu computador. Sobe o código para o GitHub, guarda as chaves em variáveis de ambiente e monta um fluxo de trabalho com o Claude Code que dá para revisar.</p></div>
+        </div>
+        <div class="acc__item">
+          <h4><button class="acc__btn" type="button" aria-expanded="false" aria-controls="m2"><span class="acc__num">02</span><span class="acc__text"><span class="acc__title">Banco de dados</span><span class="acc__meta">9 lições</span></span><span class="acc__icon" aria-hidden="true"></span></button></h4>
+          <div class="acc__panel" id="m2" hidden><p>Você modela as tabelas do agendamento e escolhe os tipos de dado. Cria no próprio banco a trava que impede dois clientes no mesmo horário e as regras que não podem depender da tela. Testa, aprende consultas úteis e a ler as mensagens de erro.</p></div>
+        </div>
+        <div class="acc__item">
+          <h4><button class="acc__btn" type="button" aria-expanded="false" aria-controls="m3"><span class="acc__num">03</span><span class="acc__text"><span class="acc__title">Interface do cliente</span><span class="acc__meta">8 lições</span></span><span class="acc__icon" aria-hidden="true"></span></button></h4>
+          <div class="acc__panel" id="m3" hidden><p>Você monta o fluxo de agendamento: calcula os horários livres, trata o conflito quando duas pessoas tentam o mesmo horário e faz o formulário. Cuida dos estados de tela (carregando, vazio, erro), pensando primeiro no celular e em acessibilidade.</p></div>
+        </div>
+        <div class="acc__item">
+          <h4><button class="acc__btn" type="button" aria-expanded="false" aria-controls="m4"><span class="acc__num">04</span><span class="acc__text"><span class="acc__title">Painel do dono</span><span class="acc__meta">9 lições</span></span><span class="acc__icon" aria-hidden="true"></span></button></h4>
+          <div class="acc__panel" id="m4" hidden><p>Você faz o login e os papéis, liga o RLS (Row Level Security) para cada pessoa ver só o que é dela e monta o painel: cancelar, remarcar, marcar falta, serviços, horários, clientes e faturamento. Termina com um roteiro de teste de segurança usando duas contas.</p></div>
+        </div>
+        <div class="acc__item">
+          <h4><button class="acc__btn" type="button" aria-expanded="false" aria-controls="m5"><span class="acc__num">05</span><span class="acc__text"><span class="acc__title">E-mails automáticos</span><span class="acc__meta">7 lições</span></span><span class="acc__icon" aria-hidden="true"></span></button></h4>
+          <div class="acc__panel" id="m5" hidden><p>Você configura o Resend com domínio verificado, entende onde o código de envio roda e escreve os e-mails de confirmação, lembrete e cancelamento. Agenda o envio dos lembretes e testa a entrega para não cair no spam.</p></div>
+        </div>
+        <div class="acc__item">
+          <h4><button class="acc__btn" type="button" aria-expanded="false" aria-controls="m6"><span class="acc__num">06</span><span class="acc__text"><span class="acc__title">Deploy e produção</span><span class="acc__meta">8 lições</span></span><span class="acc__icon" aria-hidden="true"></span></button></h4>
+          <div class="acc__panel" id="m6" hidden><p>Você faz o primeiro deploy, configura as variáveis, prepara o Supabase de produção e liga o domínio. Passa pelo checklist de entrega e por um roteiro de 15 testes, monitora o sistema e aprende a voltar atrás quando uma atualização dá errado.</p></div>
+        </div>
+
+        <h3 class="acc__group">Etapa 2 · Vender</h3>
+
+        <div class="acc__item">
+          <h4><button class="acc__btn" type="button" aria-expanded="false" aria-controls="m7"><span class="acc__num">07</span><span class="acc__text"><span class="acc__title">Primeiro cliente</span><span class="acc__meta">9 lições</span></span><span class="acc__icon" aria-hidden="true"></span></button></h4>
+          <div class="acc__panel" id="m7" hidden><p>Você confere se está pronto para vender, define quem vale a pena abordar e faz uma pesquisa de 10 minutos antes de cada contato. Tem abordagens por canal, uma rotina com números para acompanhar, uma oferta de entrada, o roteiro de entrega, como pedir prova social e um plano para quando ninguém fecha.</p></div>
+        </div>
+        <div class="acc__item">
+          <h4><button class="acc__btn" type="button" aria-expanded="false" aria-controls="m8"><span class="acc__num">08</span><span class="acc__text"><span class="acc__title">Preço e escala</span><span class="acc__meta">10 lições</span></span><span class="acc__icon" aria-hidden="true"></span></button></h4>
+          <div class="acc__panel" id="m8" hidden><p>Você monta uma tabela de referência, entende mensalidade e receita recorrente e faz a conta dos custos reais e da margem. Define os pacotes Essencial e Completo, aprende a negociar e a cobrar, a oferecer upsells, a padronizar e a decidir quando subir o preço, com cenários para comparar.</p></div>
+        </div>
+        <div class="acc__item">
+          <h4><button class="acc__btn" type="button" aria-expanded="false" aria-controls="m9"><span class="acc__num">09</span><span class="acc__text"><span class="acc__title">Caso completo</span><span class="acc__meta">10 lições</span></span><span class="acc__icon" aria-hidden="true"></span></button></h4>
+          <div class="acc__panel" id="m9" hidden><p>Você acompanha uma venda inteira, com as conversas escritas: primeira mensagem, descoberta, demonstração de 10 minutos, objeções, proposta, termo, entrega, primeira semana e pós-venda. É um caso ilustrativo, marcado como fictício no curso.</p></div>
+        </div>
+
+        <h3 class="acc__group">Etapa 3 · Operar e crescer</h3>
+
+        <div class="acc__item">
+          <h4><button class="acc__btn" type="button" aria-expanded="false" aria-controls="m10"><span class="acc__num">10</span><span class="acc__text"><span class="acc__title">Operação e suporte</span><span class="acc__meta">7 lições</span></span><span class="acc__icon" aria-hidden="true"></span></button></h4>
+          <div class="acc__panel" id="m10" hidden><p>Você monta a rotina semanal, o backup e o atendimento de suporte, vê a LGPD na prática (como orientação geral), sabe o que fazer num incidente e como atualizar o sistema. Fecha com o relatório mensal para o cliente e o que fazer num cancelamento.</p></div>
+        </div>
+        <div class="acc__item">
+          <h4><button class="acc__btn" type="button" aria-expanded="false" aria-controls="m11"><span class="acc__num">11</span><span class="acc__text"><span class="acc__title">Escala e nichos</span><span class="acc__meta">7 lições</span></span><span class="acc__icon" aria-hidden="true"></span></button></h4>
+          <div class="acc__panel" id="m11" hidden><p>Você escolhe um nicho, padroniza a entrega, junta prova social e testa canais de captação, incluindo anúncios sem promessa exagerada. Entende o que é multi-tenant, quando não fazer e quais são os limites desse modelo de negócio.</p></div>
+        </div>
+        <div class="acc__item">
+          <h4><button class="acc__btn" type="button" aria-expanded="false" aria-controls="m12"><span class="acc__num">12</span><span class="acc__text"><span class="acc__title">Playbooks por nicho</span><span class="acc__meta">9 lições</span></span><span class="acc__icon" aria-hidden="true"></span></button></h4>
+          <div class="acc__panel" id="m12" hidden><p>Você vê o que muda para barbearia, salão, estúdio de tatuagem, clínica de estética, pet shop, personal e estúdios, e quadras. Fecha com um método de entrevistas para validar o seu nicho antes de investir tempo nele.</p></div>
+        </div>
+      </div>
+
+      <div class="gaps">
+        <h3 class="gaps__title">Três coisas que costumam ficar de fora e aqui têm lição própria</h3>
+        <div class="grid grid--3">
+          <div class="gap">
+            <p class="gap__name">Roteiro de testes</p>
+            <p>15 testes antes de entregar e um teste de segurança com duas contas, para conferir que um cliente não enxerga os dados de outro.</p>
+          </div>
+          <div class="gap">
+            <p class="gap__name">Custos reais</p>
+            <p>Quanto custa hospedar cada cliente (a Vercel Hobby não é para uso comercial; o Supabase gratuito tem limites) e como isso entra no seu preço.</p>
+          </div>
+          <div class="gap">
+            <p class="gap__name">O que o kit não faz</p>
+            <p>A lista do que ficou de fora do Starter Kit e como orçar à parte, em vez de prometer ao cliente o que não existe.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. AS FERRAMENTAS -->
+  <section class="section" id="ferramentas" aria-labelledby="ferramentas-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="label"><span class="n">04</span> As ferramentas</p>
+        <h2 id="ferramentas-title">As ferramentas que você usa no dia a dia da prospecção.</h2>
+        <p class="lede">A área de membros não é só leitura. São 15 ferramentas e páginas de apoio; estas são as oito que você mais vai abrir. Nas imagens, os dados são de exemplo.</p>
+      </header>
+
+      <!-- Imagens abaixo da dobra: use loading="lazy" decoding="async" e width/height reais. -->
+      <ul class="tools">
+        <li class="tool">
+          <div class="shot__frame"><div class="todo-img" role="img" aria-label="Espaço reservado para a captura do funil de prospecção">[[IMAGEM: funil de prospecção preenchido com dados de exemplo, com a palavra “exemplo” visível na captura]]</div></div>
+          <h3>Funil de prospecção</h3>
+          <p>Você cadastra cada prospect, vê a taxa de cada etapa e descobre onde a conversa trava. Todo dia, ele lembra quem você precisa retomar.</p>
+        </li>
+        <li class="tool">
+          <div class="shot__frame"><div class="todo-img" role="img" aria-label="Espaço reservado para a captura do gerador de proposta">[[IMAGEM: gerador de proposta com dados de um negócio de exemplo]]</div></div>
+          <h3>Gerador de proposta, termo e relatório</h3>
+          <p>Preenche a proposta, o termo de aceite e o relatório mensal com os dados do cliente, para você não montar documento do zero toda vez.</p>
+        </li>
+        <li class="tool">
+          <div class="shot__frame"><div class="todo-img" role="img" aria-label="Espaço reservado para a imagem do mockup gerado">[[IMAGEM: mockup gerado para um negócio de exemplo, sem marca real]]</div></div>
+          <h3>Mockup para o prospect</h3>
+          <p>Gera uma imagem do agendamento com a cara do negócio do prospect. Ele vê como ficaria antes de você construir qualquer coisa.</p>
+        </li>
+        <li class="tool">
+          <div class="shot__frame"><div class="todo-img" role="img" aria-label="Espaço reservado para a captura do simulador de objeções">[[IMAGEM: simulador de objeções mostrando uma situação e o feedback de uma resposta]]</div></div>
+          <h3>Simulador de objeções</h3>
+          <p>Dez situações de objeção, com feedback para cada resposta que você escolher. Dá para errar aqui antes de errar na conversa de verdade.</p>
+        </li>
+        <li class="tool">
+          <div class="shot__frame"><div class="todo-img" role="img" aria-label="Espaço reservado para a captura das calculadoras">[[IMAGEM: calculadora de preço com custos fixos e variáveis de exemplo]]</div></div>
+          <h3>Calculadoras de ROI e de preço</h3>
+          <p>Uma faz a conta do lado do dono do negócio. A outra parte dos seus custos fixos e variáveis para chegar ao seu preço.</p>
+        </li>
+        <li class="tool">
+          <div class="shot__frame"><div class="todo-img" role="img" aria-label="Espaço reservado para a captura do roteiro de 30 dias">[[IMAGEM: roteiro de 30 dias com alguns dias marcados como feitos]]</div></div>
+          <h3>Roteiro de 30 dias</h3>
+          <p>O que fazer em cada dia, com progresso salvo. É um ritmo de trabalho, não um prazo garantido.</p>
+        </li>
+        <li class="tool">
+          <div class="shot__frame"><div class="todo-img" role="img" aria-label="Espaço reservado para a captura das entregas por módulo">[[IMAGEM: lista de entregas por módulo e a tela do certificado]]</div></div>
+          <h3>Entregas e certificado</h3>
+          <p>47 entregas, módulo a módulo, para você conferir o que fez, e não só o que leu. O certificado é liberado com 100% das lições.</p>
+        </li>
+        <li class="tool">
+          <div class="shot__frame"><div class="todo-img" role="img" aria-label="Espaço reservado para a captura do caderno">[[IMAGEM: Meu caderno, com anotações e favoritos de uma lição]]</div></div>
+          <h3>Meu caderno</h3>
+          <p>Anotações e favoritos em cada lição, com cópia de segurança para você não perder o que escreveu.</p>
+        </li>
+      </ul>
+
+      <div class="also">
+        <h3 class="also__title">Também na área de membros</h3>
+        <ul class="also__list">
+          <li><strong>Templates e scripts</strong> que se preenchem com os dados do prospect: mensagens, proposta, termo, relatório, cobrança, pedido de depoimento e ficha de prospect.</li>
+          <li><strong>Biblioteca de prompts</strong> para o Claude Code.</li>
+          <li><strong>Solução de problemas</strong> para os erros mais comuns.</li>
+          <li><strong>Glossário</strong>, com explicação ao passar o mouse nos termos técnicos das lições.</li>
+          <li><strong>Perguntas frequentes</strong> e <strong>checklist de lançamento</strong>.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. O STARTER KIT -->
+  <section class="section" id="starter-kit" aria-labelledby="kit-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="label"><span class="n">05</span> Starter Kit</p>
+        <h2 id="kit-title">O Starter Kit: um sistema que já funciona, para você partir dele.</h2>
+        <p class="lede">Um sistema de agendamento completo e verificado (compila, tipos e lint passam), em Next.js 16, React 19, Supabase e Tailwind. Você baixa, configura e adapta ao negócio do cliente.</p>
+      </header>
+
+      <div class="grid grid--3 kit">
+        <div>
+          <h3>Área do cliente</h3>
+          <ul class="list">
+            <li>Cadastro e login</li>
+            <li>Agendamento em passos</li>
+            <li>Meus agendamentos</li>
+            <li>Remarcar e cancelar, com regra de 90 minutos de antecedência</li>
+            <li>Arquivo para adicionar ao calendário</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Painel do dono</h3>
+          <ul class="list">
+            <li>Agenda por dia, semana e mês, em tempo real</li>
+            <li>Marcar compareceu ou faltou</li>
+            <li>Lançar agendamento pelo balcão</li>
+            <li>Clientes, serviços, horários e bloqueios</li>
+            <li>Faturamento</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Segurança</h3>
+          <ul class="list">
+            <li>Regras no banco, em funções SQL</li>
+            <li>Constraint de exclusão contra horário duplicado</li>
+            <li>RLS em todas as tabelas</li>
+            <li>Cabeçalhos de segurança</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid grid--2 kit__shots">
+        <figure class="shot">
+          <div class="shot__frame"><div class="todo-img" role="img" aria-label="Espaço reservado para as telas do fluxo do cliente">[[IMAGEM: fluxo de agendamento do cliente no celular, em 3 telas: serviço, horário e confirmação]]</div></div>
+          <figcaption>Fluxo do cliente no celular. Captura ilustrativa do Starter Kit, com dados de exemplo.</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="shot__frame"><div class="todo-img" role="img" aria-label="Espaço reservado para a captura do painel do dono">[[IMAGEM: painel do dono com a agenda da semana preenchida com dados de exemplo]]</div></div>
+          <figcaption>Painel do dono, agenda da semana. Captura ilustrativa, com dados de exemplo.</figcaption>
+        </figure>
+      </div>
+
+      <div class="notkit">
+        <h3>O que <em>não</em> vem no kit</h3>
+        <table class="table table--wide">
+          <thead>
+            <tr><th scope="col">Não vem</th><th scope="col">O que fazer</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>E-mail de lembrete</td><td>O Módulo 5 ensina a acrescentar.</td></tr>
+            <tr><td>Vários profissionais na mesma agenda</td><td>Orçar à parte. O curso mostra como apresentar isso ao cliente.</td></tr>
+            <tr><td>Pagamento online</td><td>Orçar à parte, com os cuidados que o curso aponta.</td></tr>
+            <tr><td>WhatsApp automático</td><td>Orçar à parte, com os limites que o curso aponta.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid grid--2 paths">
+        <div class="path">
+          <p class="tag">Caminho A</p>
+          <h3>Do zero</h3>
+          <p>Você constrói lição por lição. Leva mais tempo, e você entende cada peça do sistema. Bom para quem quer aprender a fundo.</p>
+        </div>
+        <div class="path">
+          <p class="tag">Caminho B</p>
+          <h3>A partir do kit</h3>
+          <p>Você parte do sistema pronto e usa as lições para entender, configurar e adaptar. Chega antes à primeira demonstração.</p>
+        </div>
+      </div>
+      <p class="fine fine--block">Licença do Starter Kit: <mark class="todo">[[PREENCHER: o que o aluno pode e não pode fazer (usar em clientes? revender?)]]</mark></p>
+    </div>
+  </section>
+
+  <!-- 7. COMO É UMA LIÇÃO -->
+  <section class="section" id="licao" aria-labelledby="licao-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="label"><span class="n">06</span> Uma lição por dentro</p>
+        <h2 id="licao-title">Como é uma lição por dentro.</h2>
+        <p class="lede">Antes de comprar, veja o nível de detalhe: texto direto, capturas anotadas, código pronto para copiar e tabelas. Os termos técnicos têm explicação ao passar o mouse.</p>
+      </header>
+
+      <figure class="shot lesson__shot">
+        <div class="shot__frame shot__frame--wide">
+          <div class="todo-img" role="img" aria-label="Espaço reservado para o print anotado de uma lição">[[IMAGEM: print de uma lição real, com 3 anotações em laranja nos pontos 1, 2 e 3 descritos na legenda]]</div>
+          <!-- Marcadores de anotação: ajuste top/left para cair sobre o ponto certo da captura real. -->
+          <span class="annot" style="top:14%;left:8%" aria-hidden="true">1</span>
+          <span class="annot" style="top:30%;left:64%" aria-hidden="true">2</span>
+          <span class="annot" style="top:74%;left:22%" aria-hidden="true">3</span>
+        </div>
+        <figcaption>
+          <ol class="annot-list">
+            <li>Progresso salvo e busca em todas as lições.</li>
+            <li>Termo técnico com explicação ao passar o mouse.</li>
+            <li>Bloco de código pronto para copiar.</li>
+          </ol>
+        </figcaption>
+      </figure>
+
+      <div class="lesson__sample">
+        <p class="tag">Trecho de amostra</p>
+        <p class="fine fine--block"><mark class="todo">[[PREENCHER: troque o código abaixo por um trecho real de uma lição do Módulo 2. Este SQL está aqui só para mostrar o formato.]]</mark></p>
+        <pre class="code" tabindex="0" aria-label="Exemplo de código SQL"><code><span class="c">-- Impede dois agendamentos no mesmo horário, direto no banco</span>
+create extension if not exists btree_gist;
+
+alter table agendamentos
+  add constraint sem_horario_duplicado
+  exclude using gist (
+    negocio_id with =,
+    tstzrange(inicio, fim, '[)') with &amp;&amp;
+  )
+  where (status &lt;&gt; 'cancelado');</code></pre>
+      </div>
+
+      <div class="cta-row">
+        <a class="btn btn--ghost btn--lg" href="[[PREENCHER:URL_LICAO_AMOSTRA]]">Ler uma lição de amostra</a>
+        <mark class="todo">[[PREENCHER: link de uma lição aberta, sem cadastro]]</mark>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. PARA QUEM É -->
+  <section class="section" id="para-quem" aria-labelledby="para-quem-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="label"><span class="n">07</span> Para quem é</p>
+        <h2 id="para-quem-title">Para quem é, e para quem não é.</h2>
+      </header>
+
+      <div class="grid grid--2 fit">
+        <div class="fit__col">
+          <h3>É para você se</h3>
+          <ul class="fit__list fit__list--yes">
+            <li>Você quer uma fonte de renda com projetos para pequenos negócios e topa conversar com gente de verdade.</li>
+            <li>Você tem disposição para aprender fazendo, mesmo sem experiência em programação.</li>
+            <li>Você aceita que o resultado depende do seu esforço e do seu mercado.</li>
+            <li>Você prefere método, checklist e ferramentas a conselhos soltos.</li>
+          </ul>
+        </div>
+        <div class="fit__col">
+          <h3>Não é para você se</h3>
+          <ul class="fit__list fit__list--no">
+            <li>Você procura renda garantida ou sem prospecção.</li>
+            <li>Você não quer falar com clientes nem fazer demonstrações.</li>
+            <li>Você quer um produto de prateleira, sem personalização nem manutenção.</li>
+            <li>Você espera aulas em vídeo.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. CASO E PROVA -->
+  <section class="section" id="caso" aria-labelledby="caso-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="label"><span class="n">08</span> Caso e prova</p>
+        <h2 id="caso-title">Ainda não há depoimentos de alunos. E não vou inventar nenhum.</h2>
+        <p class="lede">Este é um curso novo; ainda estamos juntando relatos de alunos. Quando houver depoimentos e resultados reais, com autorização, eles entram aqui.</p>
+      </header>
+
+      <p class="fine fine--block"><mark class="todo">[[PREENCHER: caso real com números (antes, depois, número do painel, autorização por escrito). Se ainda não tiver, apague esta linha.]]</mark></p>
+
+      <!--
+        DEPOIMENTOS REAIS: só publique com autorização por escrito de cada pessoa.
+        Quando tiver, copie este bloco para cada depoimento, ajuste o título e a frase acima e remova este comentário.
+
+        <div class="grid grid--2 voices-real">
+          <figure class="voice">
+            <blockquote><p>[[PREENCHER: frase do aluno, sem mudar o sentido]]</p></blockquote>
+            <figcaption>[[PREENCHER: nome]], [[PREENCHER: cidade]]</figcaption>
+          </figure>
+        </div>
+      -->
+
+      <div class="case">
+        <p class="tag">Caso ilustrativo · personagem fictício</p>
+        <h3>A venda para a Barbearia do Zé, do Módulo 9</h3>
+        <p class="case__intro">No Módulo 9 você acompanha uma venda inteira, do primeiro contato ao pós-venda, com as conversas escritas. O Zé não existe: o caso foi escrito para ensinar, e está marcado assim no curso.</p>
+        <ol class="timeline">
+          <li><span>01</span>Primeira mensagem</li>
+          <li><span>02</span>Descoberta</li>
+          <li><span>03</span>Demonstração de 10 minutos</li>
+          <li><span>04</span>Objeções</li>
+          <li><span>05</span>Proposta</li>
+          <li><span>06</span>Termo de aceite</li>
+          <li><span>07</span>Entrega</li>
+          <li><span>08</span>Primeira semana</li>
+          <li><span>09</span>Pós-venda</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. SOBRE O AUTOR -->
+  <section class="section" id="autor" aria-labelledby="autor-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="label"><span class="n">09</span> Quem escreveu</p>
+        <h2 id="autor-title">Quem escreveu o curso.</h2>
+      </header>
+
+      <div class="author">
+        <div class="author__photo">
+          <!-- Troque por: <img src="img/autor.webp" width="480" height="480" alt="Foto de [nome do autor]" loading="lazy" decoding="async"> -->
+          <div class="todo-img" role="img" aria-label="Espaço reservado para a foto do autor">[[IMAGEM: foto do autor, quadrada]]</div>
+        </div>
+        <div class="author__text">
+          <h3 class="author__name"><mark class="todo">[[PREENCHER: nome do autor]]</mark></h3>
+          <p><mark class="todo">[[PREENCHER: mini-biografia real, 3 a 5 frases, só fatos verificáveis: tempo de experiência, número aproximado de projetos, tipo de cliente]]</mark></p>
+          <p><strong>Sistema em produção:</strong> <mark class="todo">[[PREENCHER: sistema que você pode citar. Nome do negócio só com autorização por escrito do dono; senão, descreva sem nome.]]</mark></p>
+          <p><strong>Por que escrevi este curso:</strong> <mark class="todo">[[PREENCHER: 2 ou 3 frases suas, em primeira pessoa]]</mark></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. HONESTIDADE: CUSTOS, LIMITES, O QUE ESPERAR -->
+  <section class="section" id="custos" aria-labelledby="custos-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="label"><span class="n">10</span> Custos e limites</p>
+        <h2 id="custos-title">Antes de comprar: custos, tempo e limites.</h2>
+        <p class="lede">Melhor você saber agora do que descobrir no meio do caminho.</p>
+      </header>
+
+      <dl class="facts">
+        <div class="facts__row">
+          <dt>Ferramentas para estudar</dt>
+          <dd>Os planos gratuitos de GitHub, Vercel, Supabase e Resend costumam bastar para aprender. A IA de código tem custo próprio: <mark class="todo">[[PREENCHER: custo da IA de código]]</mark></dd>
+        </div>
+        <div class="facts__row">
+          <dt>Ferramentas para atender clientes</dt>
+          <dd>Cliente pagante pede plano pago. A Vercel Hobby é restrita a uso pessoal e não comercial, e o Supabase gratuito tem limite de projetos e pausa por inatividade. O curso faz a conta e mostra como esse custo entra na mensalidade. <mark class="todo">[[PREENCHER: resumo honesto do custo de ferramentas por cliente]]</mark></dd>
+        </div>
+        <div class="facts__row">
+          <dt>Tempo</dt>
+          <dd>Depende de você. Quem nunca programou leva mais tempo nos módulos de banco e interface; o Starter Kit encurta esse trecho. O roteiro de 30 dias é um ritmo de trabalho, não um prazo garantido.</dd>
+        </div>
+        <div class="facts__row">
+          <dt>O que depende de você</dt>
+          <dd>Abordar negócios, fazer demonstrações, ouvir não, ajustar e abordar de novo. O resultado também depende da sua cidade, do nicho que escolher e do preço que cobrar.</dd>
+        </div>
+        <div class="facts__row">
+          <dt>O que não está incluído</dt>
+          <dd>Aulas em vídeo. No Starter Kit: e-mail de lembrete (ensinado no Módulo 5), vários profissionais, pagamento online e WhatsApp automático. Aconselhamento jurídico, fiscal ou contábil: o termo, a proposta e as orientações de LGPD e impostos são modelos e orientação geral, e não substituem advogado ou contador.</dd>
+        </div>
+        <div class="facts__row">
+          <dt>Suporte</dt>
+          <dd><mark class="todo">[[PREENCHER: suporte incluído (e-mail, WhatsApp, comunidade, chamadas). Descreva só o que vai cumprir, ou “sem suporte além da área de membros”.]]</mark></dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- 12. A OFERTA -->
+  <section class="section section--offer" id="oferta" aria-labelledby="oferta-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="label"><span class="n">11</span> A oferta</p>
+        <h2 id="oferta-title">O que você recebe ao entrar.</h2>
+      </header>
+
+      <div class="offer">
+        <div class="offer__list">
+          <ul class="checks">
+            <li><strong>12 módulos e 104 lições em texto</strong>, na área de membros, com progresso salvo, busca e tema claro ou escuro.</li>
+            <li><strong>Starter Kit para download</strong>: sistema de agendamento em Next.js 16, React 19, Supabase e Tailwind.</li>
+            <li><strong>15 ferramentas e páginas de apoio</strong>: funil de prospecção, gerador de proposta, mockup, simulador de objeções, calculadoras, roteiro de 30 dias e mais.</li>
+            <li><strong>Templates e scripts</strong> que se preenchem com os dados do prospect.</li>
+            <li><strong>Biblioteca de prompts</strong> para o Claude Code, solução de problemas e glossário.</li>
+            <li><strong>Certificado de conclusão</strong>, liberado com 100% das lições.</li>
+            <li><strong>Suporte:</strong> <mark class="todo">[[PREENCHER: suporte incluído]]</mark></li>
+            <li><strong>Acesso:</strong> <mark class="todo">[[PREENCHER: tempo de acesso, ex.: vitalício ou 12 meses]]</mark>. <strong>Atualizações:</strong> <mark class="todo">[[PREENCHER: política de atualizações]]</mark></li>
+          </ul>
+          <p class="offer__honest">Não vou somar um “valor total” inventado nem comparar com o preço de outros cursos. O que está nesta lista é tudo o que você recebe.</p>
+        </div>
+
+        <div class="price-card">
+          <p class="tag">Investimento</p>
+          <p class="price">R$ <mark class="todo">[[PREENCHER: preço à vista]]</mark></p>
+          <p class="price__terms">à vista, ou <mark class="todo">[[PREENCHER: parcelamento]]</mark></p>
+          <a class="btn btn--primary btn--lg btn--block" href="#oferta" data-checkout data-cta="oferta">Quero entrar no curso</a>
+          <p class="fine fine--block" data-todo-checkout><mark class="todo">[[PREENCHER: link do checkout em js/config.js]]</mark></p>
+          <p class="price-card__micro">Pagamento seguro pela Kiwify (Pix, cartão e boleto, conforme disponibilidade). Acesso por e-mail logo após a confirmação.</p>
+          <p class="price-card__micro"><a href="#garantia">Garantia de <mark class="todo">[[PREENCHER: dias de garantia]]</mark> dias</a>, com devolução do valor pago.</p>
+          <p class="price-card__disclaimer">Não garantimos clientes, renda nem prazo. Os resultados dependem de dedicação, cidade, nicho, preço e execução.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13. GARANTIA -->
+  <section class="section" id="garantia" aria-labelledby="garantia-title">
+    <div class="wrap">
+      <div class="read">
+        <p class="label"><span class="n">12</span> Garantia</p>
+        <h2 id="garantia-title">Garantia de <mark class="todo">[[PREENCHER: dias de garantia]]</mark> dias.</h2>
+        <p>Se você entrar e perceber que o curso não é para você, peça o reembolso em até <mark class="todo">[[PREENCHER: dias de garantia]]</mark> dias a partir da compra, sem precisar explicar o motivo. O valor pago é devolvido integralmente.</p>
+        <p><strong>Como pedir:</strong> <mark class="todo">[[PREENCHER: canal para pedir reembolso, ex.: pela página da compra na Kiwify ou pelo e-mail de contato]]</mark></p>
+        <p>Isso é o seu direito de arrependimento: o Código de Defesa do Consumidor (art. 49) garante 7 dias para desistir de compras feitas pela internet. <mark class="todo">[[PREENCHER: se a sua garantia for maior que 7 dias, diga aqui que os dias a mais são uma garantia extra sua. Se for de 7 dias, apague esta frase.]]</mark></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14. PERGUNTAS FREQUENTES -->
+  <section class="section" id="perguntas" aria-labelledby="perguntas-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="label"><span class="n">13</span> Perguntas</p>
+        <h2 id="perguntas-title">Perguntas frequentes.</h2>
+      </header>
+
+      <div class="acc acc--faq" data-accordion data-faq>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false" aria-controls="q1"><span class="acc__text"><span class="acc__title">Preciso saber programar?</span></span><span class="acc__icon" aria-hidden="true"></span></button></h3>
+          <div class="acc__panel" id="q1" hidden><p>Não é pré-requisito. O curso usa o Claude Code para escrever grande parte do código; o seu papel é entender, testar e ajustar. Quem nunca programou leva mais tempo nos módulos de banco e interface. O Starter Kit encurta o caminho.</p></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false" aria-controls="q2"><span class="acc__text"><span class="acc__title">Quanto vou ganhar?</span></span><span class="acc__icon" aria-hidden="true"></span></button></h3>
+          <div class="acc__panel" id="q2" hidden><p>Não sabemos e não prometemos. O curso mostra a conta (preço, custos e cenários, como exercício) para você decidir. O resultado depende de quantos negócios você consegue abordar, converter e atender.</p></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false" aria-controls="q3"><span class="acc__text"><span class="acc__title">Quanto tempo até o primeiro cliente?</span></span><span class="acc__icon" aria-hidden="true"></span></button></h3>
+          <div class="acc__panel" id="q3" hidden><p>Depende. O curso traz um roteiro de 30 dias como ritmo de trabalho, não como prazo garantido.</p></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false" aria-controls="q4"><span class="acc__text"><span class="acc__title">E se ninguém comprar de mim?</span></span><span class="acc__icon" aria-hidden="true"></span></button></h3>
+          <div class="acc__panel" id="q4" hidden><p>Há uma lição inteira sobre diagnosticar onde o funil trava e um plano de 14 dias para recomeçar, e a ferramenta de funil mostra os seus números. Existem cidades e nichos mais difíceis, e algumas pessoas descobrem que não gostam de vender: o curso diz isso abertamente.</p></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false" aria-controls="q5"><span class="acc__text"><span class="acc__title">Isso funciona na minha cidade?</span></span><span class="acc__icon" aria-hidden="true"></span></button></h3>
+          <div class="acc__panel" id="q5" hidden><p>Não dá para garantir. Cidade, nicho e concorrência mudam muito o resultado. O Módulo 12 traz um método de entrevistas para validar o nicho antes de investir tempo, e o funil de prospecção mostra, com os seus números, se a abordagem está funcionando.</p></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false" aria-controls="q6"><span class="acc__text"><span class="acc__title">Quais ferramentas vou usar e quanto vou gastar?</span></span><span class="acc__icon" aria-hidden="true"></span></button></h3>
+          <div class="acc__panel" id="q6" hidden><p>Para estudar, os planos gratuitos costumam bastar. Para hospedar clientes que pagam, há custos: a Vercel Hobby é restrita a uso pessoal e não comercial (cliente pagante pede plano pago), e o Supabase gratuito tem limite de projetos e pausa por inatividade. O curso traz a conta completa. <mark class="todo">[[PREENCHER: custo da IA de código]]</mark></p></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false" aria-controls="q7"><span class="acc__text"><span class="acc__title">A IA não faz tudo sozinha?</span></span><span class="acc__icon" aria-hidden="true"></span></button></h3>
+          <div class="acc__panel" id="q7" hidden><p>Não. Ela acelera, mas erra. O curso ensina a revisar, testar e não confiar às cegas, principalmente em segurança.</p></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false" aria-controls="q8"><span class="acc__text"><span class="acc__title">O curso garante que meu sistema vai funcionar sem erros?</span></span><span class="acc__icon" aria-hidden="true"></span></button></h3>
+          <div class="acc__panel" id="q8" hidden><p>Não. Software exige testes. Por isso há roteiros de teste, checklist de entrega e uma página de solução de problemas.</p></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false" aria-controls="q9"><span class="acc__text"><span class="acc__title">Preciso de CNPJ?</span></span><span class="acc__icon" aria-hidden="true"></span></button></h3>
+          <div class="acc__panel" id="q9" hidden><p>Depende do seu caso. O curso orienta a conversar com um contador cedo e não dá aconselhamento fiscal.</p></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false" aria-controls="q10"><span class="acc__text"><span class="acc__title">É só texto? Onde estão as aulas?</span></span><span class="acc__icon" aria-hidden="true"></span></button></h3>
+          <div class="acc__panel" id="q10" hidden><p>Sim, é texto, com imagens, tabelas, códigos prontos e ferramentas interativas. Foi pensado para ser consultado enquanto você faz. Se você só aprende com vídeo, este curso não é para você.</p></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false" aria-controls="q11"><span class="acc__text"><span class="acc__title">Tem suporte?</span></span><span class="acc__icon" aria-hidden="true"></span></button></h3>
+          <div class="acc__panel" id="q11" hidden><p><mark class="todo">[[PREENCHER: suporte incluído, descrevendo só o que será entregue]]</mark></p></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false" aria-controls="q12"><span class="acc__text"><span class="acc__title">Posso usar o Starter Kit com meus clientes? Posso revender?</span></span><span class="acc__icon" aria-hidden="true"></span></button></h3>
+          <div class="acc__panel" id="q12" hidden><p><mark class="todo">[[PREENCHER: resposta conforme a licença do Starter Kit]]</mark></p></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false" aria-controls="q13"><span class="acc__text"><span class="acc__title">Funciona para outros negócios além de barbearia?</span></span><span class="acc__icon" aria-hidden="true"></span></button></h3>
+          <div class="acc__panel" id="q13" hidden><p>Sim, com adaptações. O Módulo 12 mostra o que muda em cada tipo de negócio e o que o kit não cobre, por exemplo aulas coletivas com vagas ou vários profissionais.</p></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false" aria-controls="q14"><span class="acc__text"><span class="acc__title">E a LGPD?</span></span><span class="acc__icon" aria-hidden="true"></span></button></h3>
+          <div class="acc__panel" id="q14" hidden><p>Há uma lição de LGPD em linguagem simples, com avisos claros de que é orientação geral e não substitui um advogado.</p></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false" aria-controls="q15"><span class="acc__text"><span class="acc__title">Quanto de atualização eu recebo?</span></span><span class="acc__icon" aria-hidden="true"></span></button></h3>
+          <div class="acc__panel" id="q15" hidden><p><mark class="todo">[[PREENCHER: política de atualizações]]</mark></p></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false" aria-controls="q16"><span class="acc__text"><span class="acc__title">Como recebo o acesso?</span></span><span class="acc__icon" aria-hidden="true"></span></button></h3>
+          <div class="acc__panel" id="q16" hidden><p>O pagamento é feito pela Kiwify. <mark class="todo">[[PREENCHER: como o aluno recebe o acesso (área de membros da Kiwify, link, e-mail de acesso)]]</mark></p></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false" aria-controls="q17"><span class="acc__text"><span class="acc__title">E se eu não gostar?</span></span><span class="acc__icon" aria-hidden="true"></span></button></h3>
+          <div class="acc__panel" id="q17" hidden><p>Você tem garantia de <mark class="todo">[[PREENCHER: dias de garantia]]</mark> dias, com devolução do valor pelo canal <mark class="todo">[[PREENCHER: canal para pedir reembolso]]</mark>. O direito de arrependimento de 7 dias em compras pela internet é previsto em lei (CDC, art. 49).</p></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false" aria-controls="q18"><span class="acc__text"><span class="acc__title">Vale o preço?</span></span><span class="acc__icon" aria-hidden="true"></span></button></h3>
+          <div class="acc__panel" id="q18" hidden><p>Só você pode responder. Veja a lista do que está incluído, leia a lição de amostra e compare com o tempo que levaria para juntar tudo isso sozinho. Se entrar e achar que não valeu, a garantia está aí.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15. CHAMADA FINAL -->
+  <section class="section final" id="final" aria-labelledby="final-title">
+    <div class="wrap">
+      <div class="read">
+        <h2 id="final-title">Em resumo.</h2>
+        <ul class="final__lines">
+          <li>Você aprende a construir um sistema de agendamento e a colocá-lo no ar.</li>
+          <li>Aprende a encontrar negócios, conversar, propor e cobrar mensalidade.</li>
+          <li>E leva o Starter Kit e as ferramentas para fazer isso no dia a dia.</li>
+        </ul>
+        <div class="cta-row">
+          <a class="btn btn--primary btn--lg" href="#oferta" data-checkout data-cta="final">Quero entrar no curso</a>
+        </div>
+        <p class="final__note">O curso dá o caminho e as ferramentas. Abordar, demonstrar e entregar continua sendo com você.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- 16. RODAPÉ LEGAL -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div>
+        <p class="brand">Fábrica de Clientes</p>
+        <p>Vendido por <mark class="todo">[[PREENCHER: razão social ou nome completo]]</mark> · CNPJ/CPF <mark class="todo">[[PREENCHER: CNPJ ou CPF]]</mark></p>
+        <p>Contato: <a href="mailto:[[PREENCHER:EMAIL]]"><mark class="todo">[[PREENCHER: e-mail de contato]]</mark></a> · WhatsApp <a href="https://wa.me/[[PREENCHER:WHATSAPP]]"><mark class="todo">[[PREENCHER: WhatsApp de contato]]</mark></a></p>
+      </div>
+      <nav class="footer__links" aria-label="Documentos legais">
+        <a href="[[PREENCHER:URL_TERMOS]]">Termos de Uso</a>
+        <a href="[[PREENCHER:URL_PRIVACIDADE]]">Política de Privacidade</a>
+        <button class="linklike" type="button" data-cookie-prefs hidden>Preferências de cookies</button>
+        <mark class="todo">[[PREENCHER: links de Termos e Privacidade]]</mark>
+      </nav>
+    </div>
+
+    <div class="footer__legal">
+      <p><strong>Aviso de resultados.</strong> Este curso ensina um método e fornece ferramentas. Não garantimos que você terá clientes, nem quanto vai ganhar, nem em quanto tempo. Os resultados dependem de fatores como dedicação, cidade, nicho, preço e execução, e variam de pessoa para pessoa. Os valores, conversas e casos apresentados no curso são exemplos para ensinar, e não resultados de alunos, salvo quando indicado. Impostos, contratos e proteção de dados são tratados como orientação geral e não substituem advogado ou contador.</p>
+      <p><strong>Marcas de terceiros.</strong> GitHub, Vercel, Supabase, Resend, Next.js, Claude e Kiwify são marcas de seus respectivos titulares, citadas apenas para identificar as tecnologias ensinadas. Esta página não tem vínculo, patrocínio ou endosso dessas empresas. Esta página não é afiliada ao Facebook, Instagram, Google ou outras plataformas de anúncio.</p>
+      <p>© 2026 Fábrica de Clientes.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Botão fixo no celular: aparece depois da primeira tela e some perto da oferta. -->
+<div class="sticky-cta" aria-label="Atalho para a compra" role="region">
+  <p class="sticky-cta__price"><strong>R$ <mark class="todo">[[PREENCHER: preço à vista]]</mark></strong><span>Garantia de <mark class="todo">[[PREENCHER: dias de garantia]]</mark> dias</span></p>
+  <a class="btn btn--primary" href="#oferta" data-checkout data-cta="fixo">Quero entrar</a>
+</div>
+
+<!-- Aviso de cookies: só aparece se houver pixel/analytics configurado em js/config.js. -->
+<div class="cookies" role="region" aria-labelledby="cookies-title" hidden>
+  <p class="cookies__title" id="cookies-title">Cookies de medição</p>
+  <p class="cookies__text">Se você permitir, usamos cookies de <span data-cookie-services>medição</span> para saber quais anúncios trazem visitas. Se recusar, nada disso é carregado. <a href="[[PREENCHER:URL_PRIVACIDADE]]">Política de Privacidade</a></p>
+  <div class="cookies__actions">
+    <button class="btn btn--choice" type="button" data-consent="denied">Recusar</button>
+    <button class="btn btn--choice" type="button" data-consent="granted">Aceitar</button>
+  </div>
+</div>
+
+</body>
+</html>
