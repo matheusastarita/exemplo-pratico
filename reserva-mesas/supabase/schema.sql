@@ -2689,8 +2689,12 @@ begin
 end;
 $$;
 
-create or replace function public.report_daily(p_from date, p_to date)
-returns table (day date, reservations int, people int, cancelled int, no_shows int, walk_ins int, occupancy numeric)
+-- capacity/used_minutes vão junto para somar semanas e meses com exatidão
+-- (média de percentuais de dias diferentes daria número errado).
+drop function if exists public.report_daily(date, date);
+create function public.report_daily(p_from date, p_to date)
+returns table (day date, reservations int, people int, cancelled int, no_shows int, walk_ins int, occupancy numeric,
+               capacity_minutes numeric, used_minutes numeric)
 language plpgsql
 security definer
 stable
@@ -2718,7 +2722,8 @@ begin
     )
     select d.day, coalesce(x.reservations, 0), coalesce(x.people, 0), coalesce(x.cancelled, 0),
            coalesce(x.no_shows, 0), coalesce(x.walk_ins, 0),
-           case when coalesce(c.m, 0) = 0 then null else round(100.0 * coalesce(u.m, 0) / c.m, 1) end
+           case when coalesce(c.m, 0) = 0 then null else round(100.0 * coalesce(u.m, 0) / c.m, 1) end,
+           coalesce(c.m, 0), coalesce(u.m, 0)
     from days d
     left join res x on x.day = d.day
     left join cap c on c.day = d.day

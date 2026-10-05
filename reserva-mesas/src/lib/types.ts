@@ -477,6 +477,8 @@ export type ReportDailyRow = {
   no_shows: number;
   walk_ins: number;
   occupancy: number | null;
+  capacity_minutes: number;
+  used_minutes: number;
 };
 
 export type ReportHourRow = { hour: number; reservations: number; people: number };

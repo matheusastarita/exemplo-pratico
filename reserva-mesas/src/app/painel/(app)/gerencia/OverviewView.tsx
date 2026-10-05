@@ -7,16 +7,14 @@ import { buttonClasses } from "@/components/ui/Button";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { BarChart } from "@/components/charts/BarChart";
 import { ChartCard } from "@/components/charts/ChartCard";
+import { CompareTile, percentChange } from "@/components/charts/CompareTile";
+import { MeterList } from "@/components/charts/MeterList";
 import { AlertIcon, CalendarIcon, ChartIcon, MapIcon, PeopleIcon } from "@/components/icons";
 import { dayMonthLabel, formatDateHeading, formatWeekdayDateShort, weekdayShortLabel } from "@/lib/dates";
 import { formatPercent } from "@/lib/format";
 import type { ManagerOverview } from "@/lib/types";
 
-/** Variação percentual; null quando não há base de comparação. */
-function percentChange(current: number | null, previous: number | null): number | null {
-  if (current === null || previous === null || previous <= 0) return null;
-  return Math.round(((current - previous) / previous) * 100);
-}
+const VS = "vs 7 dias anteriores";
 
 function pct(n: number | null) {
   return n === null ? "—" : formatPercent(n);
@@ -101,10 +99,10 @@ export function OverviewView({ data }: { data: ManagerOverview }) {
           Últimos 7 dias <span className="font-normal normal-case tracking-normal">· comparado com os 7 dias anteriores</span>
         </h2>
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-          <WeekTile label="Reservas" current={week.reservations} previous={prevWeek.reservations} />
-          <WeekTile label="Pessoas" current={week.people} previous={prevWeek.people} />
-          <WeekTile label="Ocupação" current={week.occupancy} previous={prevWeek.occupancy} percent />
-          <WeekTile label="Taxa de faltas" current={week.no_show_rate} previous={prevWeek.no_show_rate} percent goodDown />
+          <CompareTile label="Reservas" current={week.reservations} previous={prevWeek.reservations} versus={VS} />
+          <CompareTile label="Pessoas" current={week.people} previous={prevWeek.people} versus={VS} />
+          <CompareTile label="Ocupação" current={week.occupancy} previous={prevWeek.occupancy} percent versus={VS} />
+          <CompareTile label="Taxa de faltas" current={week.no_show_rate} previous={prevWeek.no_show_rate} percent goodDown versus={VS} />
         </div>
       </section>
 
@@ -157,57 +155,19 @@ export function OverviewView({ data }: { data: ManagerOverview }) {
         {busy.length === 0 ? (
           <p className="mt-4 text-sm text-stone-500">Nenhuma data com movimento acima do normal por enquanto.</p>
         ) : (
-          <ul className="mt-4 flex flex-col gap-3">
-            {busy.map((d) => (
-              <li key={d.day} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-1.5 sm:grid-cols-[180px_minmax(0,1fr)_auto]">
-                <span className="text-sm font-medium text-stone-900">{formatWeekdayDateShort(d.day)}</span>
-                <span className="order-3 col-span-2 h-2.5 overflow-hidden rounded-full bg-brand-soft sm:order-none sm:col-span-1" aria-hidden="true">
-                  <span className="block h-full rounded-full bg-brand-ink" style={{ width: `${Math.min(100, d.occupancy ?? 0)}%` }} />
-                </span>
-                <span className="text-right text-sm text-stone-600">
-                  <span className="font-semibold text-stone-900">{pct(d.occupancy)}</span> · {d.reservations} reservas · {d.people} pessoas
-                </span>
-              </li>
-            ))}
-          </ul>
+          <div className="mt-4">
+            <MeterList
+              ariaLabel="Próximas datas mais cheias"
+              items={busy.map((d) => ({
+                key: d.day,
+                label: formatWeekdayDateShort(d.day),
+                share: d.occupancy ?? 0,
+                value: `${pct(d.occupancy)} · ${d.reservations} reservas · ${d.people} pessoas`,
+              }))}
+            />
+          </div>
         )}
       </Card>
     </div>
-  );
-}
-
-function WeekTile({
-  label,
-  current,
-  previous,
-  percent = false,
-  goodDown = false,
-}: {
-  label: string;
-  current: number | null;
-  previous: number | null;
-  percent?: boolean;
-  goodDown?: boolean;
-}) {
-  const delta = percent
-    ? current !== null && previous !== null
-      ? Math.round((current - previous) * 10) / 10
-      : null
-    : percentChange(current, previous);
-  const good = delta === null || delta === 0 ? null : (delta > 0) !== goodDown;
-  return (
-    <Card padding="sm" className="sm:p-5">
-      <p className="text-xs text-stone-500 sm:text-sm">{label}</p>
-      <p className="mt-1 text-xl font-semibold text-stone-900 sm:text-2xl">
-        {current === null ? "—" : percent ? formatPercent(current) : current.toLocaleString("pt-BR")}
-      </p>
-      <p className={`mt-0.5 text-xs ${good === null ? "text-stone-500" : good ? "text-status-confirmed" : "text-status-no-show"}`}>
-        {delta === null
-          ? "sem base de comparação"
-          : delta === 0
-            ? "igual aos 7 dias anteriores"
-            : `${delta > 0 ? "▲" : "▼"} ${Math.abs(delta)}${percent ? " p.p." : "%"} vs 7 dias anteriores`}
-      </p>
-    </Card>
   );
 }
