@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CheckCircleIcon, CloseIcon, AlertIcon } from "@/components/icons";
 
 export type ToastData = {
@@ -10,6 +10,16 @@ export type ToastData = {
   actionLabel?: string;
   onAction?: () => void;
 };
+
+/** Estado do aviso + função para mostrar um novo (gera o id, que reinicia o tempo de exibição). */
+export function useToast() {
+  const [toast, setToast] = useState<ToastData | null>(null);
+  const show = useCallback((message: string, tone: ToastData["tone"] = "success") => {
+    setToast({ id: Date.now(), message, tone });
+  }, []);
+  const clear = useCallback(() => setToast(null), []);
+  return { toast, show, clear };
+}
 
 /** Aviso rápido no rodapé (some sozinho). Opcionalmente com ação, ex.: "Desfazer". */
 export function Toast({ toast, onClose }: { toast: ToastData | null; onClose: () => void }) {

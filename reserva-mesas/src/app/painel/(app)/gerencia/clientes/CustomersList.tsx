@@ -19,8 +19,17 @@ import type { CustomerSummary } from "@/lib/types";
 // "Sumido" = já veio pelo menos uma vez, a última visita foi há mais de 60 dias
 // e não tem reserva marcada.
 const INACTIVE_DAYS = 60;
+// "Mais frequente" = está entre os 10% que mais vieram (e veio pelo menos 3 vezes).
 const FREQUENT_MIN_VISITS = 3;
+const FREQUENT_TOP_SHARE = 0.1;
 const PAGE = 100;
+
+function frequentThreshold(customers: CustomerSummary[]): number {
+  const visits = customers.map((c) => c.visits).filter((v) => v > 0).sort((a, b) => b - a);
+  if (visits.length === 0) return FREQUENT_MIN_VISITS;
+  const cut = visits[Math.max(0, Math.ceil(visits.length * FREQUENT_TOP_SHARE) - 1)];
+  return Math.max(FREQUENT_MIN_VISITS, cut);
+}
 
 type Filter = "all" | "frequent" | "inactive" | "no_shows" | "vip" | "birthday" | "blocked";
 
@@ -41,18 +50,19 @@ export function CustomersList({ customers, today }: { customers: CustomerSummary
   const [filter, setFilter] = useState<Filter>("all");
   const [limit, setLimit] = useState(PAGE);
   const month = today.slice(5, 7);
+  const frequentMin = useMemo(() => frequentThreshold(customers), [customers]);
 
   const tests = useMemo<Record<Filter, (c: CustomerSummary) => boolean>>(
     () => ({
       all: () => true,
-      frequent: (c) => c.visits >= FREQUENT_MIN_VISITS,
+      frequent: (c) => c.visits >= frequentMin,
       inactive: (c) => !!c.last_visit && daysBetween(c.last_visit, today) > INACTIVE_DAYS && !c.next_reservation,
       no_shows: (c) => c.no_shows > 0,
       vip: (c) => c.tags.includes("VIP"),
       birthday: (c) => !!c.birthday && c.birthday.slice(5, 7) === month,
       blocked: (c) => c.blocked,
     }),
-    [today, month]
+    [today, month, frequentMin]
   );
 
   const options = useMemo(() => {
@@ -204,15 +214,14 @@ export function CustomersList({ customers, today }: { customers: CustomerSummary
                           {c.blocked && <Badge tone="no_show">Bloqueado</Badge>}
                           {birthdayThisMonth && <Badge tone="warning">Aniversário {dayMonthLabel(c.birthday!)}</Badge>}
                         </p>
-                        <p className="truncate text-xs text-stone-500">
-                          {formatPhone(c.phone) || c.email || "Sem contato"}
-                          {/* No celular, o resumo vai na mesma célula */}
-                          <span className="md:hidden">
-                            {" · "}
-                            {c.visits === 0 ? "nunca veio" : pluralize(c.visits, "visita", "visitas")}
-                            {since !== null && ` · última ${sinceLabel(since)}`}
-                            {c.no_shows > 0 && ` · ${pluralize(c.no_shows, "falta", "faltas")}`}
-                          </span>
+                        <p className="truncate text-xs text-stone-500">{formatPhone(c.phone) || c.email || "Sem contato"}</p>
+                        {/* No celular, o resumo ganha uma linha própria (as colunas só aparecem do tablet pra cima) */}
+                        <p className="text-xs text-stone-500 md:hidden">
+                          {c.visits === 0 ? "Nunca veio" : pluralize(c.visits, "visita", "visitas")}
+                          {since !== null && ` · última ${sinceLabel(since)}`}
+                          {c.no_shows > 0 && (
+                            <span className="font-medium text-status-no-show"> · {pluralize(c.no_shows, "falta", "faltas")}</span>
+                          )}
                         </p>
                       </div>
                     </div>

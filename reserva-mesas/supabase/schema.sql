@@ -3008,6 +3008,139 @@ begin
 end;
 $$;
 
+-- Turnos de um dia da semana, gravados de uma vez: a tela manda a lista inteira
+-- do dia (com id nos que já existem). Valida horários e sobreposição.
+create or replace function public.save_day_shifts(p_weekday int, p_shifts jsonb)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  x jsonb;
+  v_ids uuid[] := '{}';
+  v_id uuid;
+  v_name text;
+  v_open time;
+  v_last time;
+  v_close time;
+  v_cap int;
+  v_is_open boolean;
+begin
+  if not public.is_manager() then
+    raise exception 'not_allowed';
+  end if;
+  if p_weekday is null or p_weekday not between 0 and 6
+     or p_shifts is null or jsonb_typeof(p_shifts) <> 'array' then
+    raise exception 'invalid_request';
+  end if;
+  if jsonb_array_length(p_shifts) > 4 then
+    raise exception 'too_many_shifts';
+  end if;
+
+  for x in select v from jsonb_array_elements(p_shifts) v loop
+    v_name := btrim(coalesce(x->>'name', ''));
+    v_open := (x->>'open_time')::time;
+    v_last := (x->>'last_seating_time')::time;
+    v_close := (x->>'close_time')::time;
+    v_cap := nullif(x->>'max_covers', '')::int;
+    if char_length(v_name) not between 1 and 30 then
+      raise exception 'invalid_shift_name';
+    end if;
+    if v_open is null or v_last is null or v_close is null or not (v_open < v_last and v_last <= v_close) then
+      raise exception 'invalid_shift_times';
+    end if;
+    if v_cap is not null and v_cap not between 1 and 2000 then
+      raise exception 'invalid_capacity';
+    end if;
+  end loop;
+
+  -- Turnos abertos do mesmo dia não podem se cruzar
+  if exists (
+    select 1
+    from jsonb_array_elements(p_shifts) with ordinality a(v, i)
+    join jsonb_array_elements(p_shifts) with ordinality b(v, j) on a.i < b.j
+    where coalesce((a.v->>'is_open')::boolean, true) and coalesce((b.v->>'is_open')::boolean, true)
+      and (a.v->>'open_time')::time < (b.v->>'close_time')::time
+      and (b.v->>'open_time')::time < (a.v->>'close_time')::time
+  ) then
+    raise exception 'shifts_overlap';
+  end if;
+
+  for x in select v from jsonb_array_elements(p_shifts) v loop
+    v_id := nullif(x->>'id', '')::uuid;
+    v_is_open := coalesce((x->>'is_open')::boolean, true);
+    if v_id is not null and exists (select 1 from public.shifts where id = v_id and weekday = p_weekday) then
+      update public.shifts
+         set name = btrim(x->>'name'),
+             open_time = (x->>'open_time')::time,
+             last_seating_time = (x->>'last_seating_time')::time,
+             close_time = (x->>'close_time')::time,
+             max_covers = nullif(x->>'max_covers', '')::int,
+             is_open = v_is_open
+       where id = v_id;
+    else
+      insert into public.shifts (weekday, name, open_time, last_seating_time, close_time, max_covers, is_open)
+      values (p_weekday, btrim(x->>'name'), (x->>'open_time')::time, (x->>'last_seating_time')::time,
+              (x->>'close_time')::time, nullif(x->>'max_covers', '')::int, v_is_open)
+      returning id into v_id;
+    end if;
+    v_ids := v_ids || v_id;
+  end loop;
+
+  -- Turnos que saíram da lista (os fechamentos ligados a eles saem junto)
+  delete from public.shifts where weekday = p_weekday and not (id = any (v_ids));
+
+  insert into public.audit_log (actor, action, entity, entity_id, details)
+  values (auth.uid(), 'shifts_saved', 'settings', null, jsonb_build_object('weekday', p_weekday, 'shifts', p_shifts));
+end;
+$$;
+
+-- Tempo de permanência por tamanho do grupo: faixas contínuas de 1 a 60 pessoas,
+-- trocadas de uma vez (vale para as próximas reservas).
+create or replace function public.save_turn_times(p_rows jsonb)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  x jsonb;
+  v_expected int := 1;
+  v_min int;
+  v_max int;
+  v_minutes int;
+begin
+  if not public.is_manager() then
+    raise exception 'not_allowed';
+  end if;
+  if p_rows is null or jsonb_typeof(p_rows) <> 'array' or jsonb_array_length(p_rows) not between 1 and 12 then
+    raise exception 'invalid_turn_times';
+  end if;
+  for x in select v from jsonb_array_elements(p_rows) v order by (v->>'party_min')::int loop
+    v_min := (x->>'party_min')::int;
+    v_max := (x->>'party_max')::int;
+    v_minutes := (x->>'minutes')::int;
+    if v_min is distinct from v_expected or v_max is null or v_max < v_min or v_max > 60
+       or v_minutes is null or v_minutes not between 15 and 600 then
+      raise exception 'invalid_turn_times';
+    end if;
+    v_expected := v_max + 1;
+  end loop;
+  if v_expected <> 61 then
+    raise exception 'invalid_turn_times';
+  end if;
+
+  delete from public.turn_times where true;
+  insert into public.turn_times (party_min, party_max, minutes)
+  select (v->>'party_min')::int, (v->>'party_max')::int, (v->>'minutes')::int
+  from jsonb_array_elements(p_rows) v;
+
+  insert into public.audit_log (actor, action, entity, entity_id, details)
+  values (auth.uid(), 'turn_times_saved', 'settings', null, jsonb_build_object('rows', p_rows));
+end;
+$$;
+
 -- ============================================================================
 -- ROW LEVEL SECURITY
 -- ============================================================================
@@ -3198,6 +3331,8 @@ grant execute on function public.manager_overview() to authenticated;
 grant execute on function public.invite_staff(text, text, text) to authenticated;
 grant execute on function public.revoke_invite(text) to authenticated;
 grant execute on function public.set_staff(uuid, text, boolean) to authenticated;
+grant execute on function public.save_day_shifts(int, jsonb) to authenticated;
+grant execute on function public.save_turn_times(jsonb) to authenticated;
 
 -- ============================================================================
 -- REALTIME: o painel do salão atualiza sozinho quando entra reserva, alguém

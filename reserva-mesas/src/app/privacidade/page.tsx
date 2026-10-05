@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { LegalPage } from "@/components/LegalPage";
 import { getPublicInfo } from "@/lib/restaurant";
+import { formatPhone } from "@/lib/format";
 
 export const metadata: Metadata = { title: "Política de Privacidade" };
 
 export default async function PrivacidadePage() {
   const { info } = await getPublicInfo();
-  const contact = [info.phone, info.whatsapp ? "WhatsApp" : null].filter(Boolean).join(" ou ");
+  const contact = [info.phone ? formatPhone(info.phone) : null, info.whatsapp ? "WhatsApp" : null].filter(Boolean).join(" ou ");
 
   return (
     <LegalPage info={info} title="Política de Privacidade" updated="outubro de 2026">

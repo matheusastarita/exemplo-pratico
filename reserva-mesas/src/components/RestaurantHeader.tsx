@@ -2,7 +2,7 @@ import Link from "next/link";
 import { RestaurantMark } from "@/components/RestaurantMark";
 import { ClockIcon, InstagramIcon, PhoneIcon, PinIcon, UserIcon, WhatsAppIcon } from "@/components/icons";
 import { closedDaysLabel, instagramHref, mapsHref, summarizeShifts } from "@/lib/hours";
-import { telHref, whatsappHref } from "@/lib/format";
+import { formatPhone, telHref, whatsappHref } from "@/lib/format";
 import type { PublicInfo } from "@/lib/types";
 
 /** Cabeçalho da página pública: marca, endereço com mapa, contatos e horários. */
@@ -45,7 +45,7 @@ export function RestaurantHeader({ info, signedIn }: { info: PublicInfo; signedI
                   href={telHref(info.phone)}
                   className="flex min-h-tap items-center gap-2 rounded-full bg-white/10 px-4 text-sm font-medium hover:bg-white/15"
                 >
-                  <PhoneIcon size={17} /> {info.phone}
+                  <PhoneIcon size={17} /> {formatPhone(info.phone)}
                 </a>
               )}
               {info.whatsapp && (

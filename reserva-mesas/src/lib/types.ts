@@ -769,6 +769,22 @@ export type Database = {
       revoke_invite: Fn<{ p_email: string }, undefined>;
       set_staff: Fn<{ p_user_id: string; p_role: Role; p_active: boolean }, undefined>;
       demo_reset: Fn<{ p_site_url?: string | null }, undefined>;
+      save_day_shifts: Fn<
+        {
+          p_weekday: number;
+          p_shifts: {
+            id?: string | null;
+            name: string;
+            open_time: string;
+            last_seating_time: string;
+            close_time: string;
+            max_covers: number | null;
+            is_open: boolean;
+          }[];
+        },
+        undefined
+      >;
+      save_turn_times: Fn<{ p_rows: TurnTimeRow[] }, undefined>;
     };
     Enums: { [_ in never]: never };
     CompositeTypes: { [_ in never]: never };

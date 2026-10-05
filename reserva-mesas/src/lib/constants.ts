@@ -34,6 +34,12 @@ export const ERROR_MESSAGES: Record<string, string> = {
   not_editable: "Essa reserva já foi encerrada e não pode ser editada.",
   reason_required: "Informe o motivo.",
   cannot_change_self: "Você não pode alterar o seu próprio acesso.",
+  too_many_shifts: "No máximo 4 turnos por dia.",
+  invalid_shift_name: "Dê um nome ao turno (ex.: Almoço, Jantar).",
+  invalid_shift_times: "Confira os horários: abre antes da última entrada, e a última entrada vem antes (ou junto) do fechamento.",
+  invalid_capacity: "O limite de pessoas precisa ser um número maior que zero.",
+  shifts_overlap: "Dois turnos do mesmo dia estão se cruzando. Ajuste os horários.",
+  invalid_turn_times: "As faixas de pessoas precisam começar em 1 e seguir sem buracos, com tempos entre 15 min e 10 h.",
 };
 
 function extractMessage(error: unknown): string {

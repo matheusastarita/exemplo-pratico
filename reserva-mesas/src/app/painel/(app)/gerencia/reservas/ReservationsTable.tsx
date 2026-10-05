@@ -61,10 +61,20 @@ function countsOf(rows: ManagerReservation[]) {
   };
 }
 
-export function ReservationsTable({ today, areas, restaurant }: { today: string; areas: AreaRow[]; restaurant: string }) {
+export function ReservationsTable({
+  today,
+  areas,
+  restaurant,
+  initialRange,
+}: {
+  today: string;
+  areas: AreaRow[];
+  restaurant: string;
+  initialRange?: [string, string];
+}) {
   const supabase = useMemo(() => createClient(), []);
-  const [preset, setPreset] = useState<Preset>("proximos7");
-  const [custom, setCustom] = useState<[string, string]>([today, isoDateAddDays(today, 13)]);
+  const [preset, setPreset] = useState<Preset>(initialRange ? "personalizado" : "proximos7");
+  const [custom, setCustom] = useState<[string, string]>(initialRange ?? [today, isoDateAddDays(today, 13)]);
   const [status, setStatus] = useState<ReservationStatus | "">("");
   const [source, setSource] = useState<ReservationSource | "">("");
   const [area, setArea] = useState("");
