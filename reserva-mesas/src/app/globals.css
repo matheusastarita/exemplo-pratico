@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Paleta por variáveis (canais RGB, pra funcionar com /opacidade do Tailwind).
+ * stone-50 é o creme de fundo, stone-900 é a tinta do texto principal.
+ * As variáveis --c-brand* abaixo são só o valor padrão: o layout raiz sobrescreve
+ * com a cor configurada em restaurant_settings (ver lib/brand.ts).
+ */
+:root {
+  --r-control: 0.875rem;
+  --r-card: 1.25rem;
+
+  --c-white: 255 255 255;
+  --c-cream: 247 243 236;
+  --c-stone-50: 247 243 236;
+  --c-stone-100: 241 237 230;
+  --c-stone-200: 228 223 215;
+  --c-stone-300: 212 206 197;
+  --c-stone-400: 163 156 147;
+  --c-stone-500: 116 109 101;
+  --c-stone-600: 87 81 75;
+  --c-stone-700: 68 63 58;
+  --c-stone-800: 45 41 37;
+  --c-stone-900: 28 25 23;
+  --c-stone-950: 15 13 12;
+
+  --c-red-50: 254 242 242;
+  --c-red-100: 254 226 226;
+  --c-red-200: 254 202 202;
+  --c-red-300: 252 165 165;
+  --c-red-400: 248 113 113;
+  --c-red-600: 220 38 38;
+  --c-red-700: 185 28 28;
+  --c-emerald-50: 236 253 245;
+  --c-emerald-700: 4 120 87;
+  --c-amber-50: 255 251 235;
+  --c-amber-100: 254 243 199;
+  --c-amber-700: 180 83 9;
+  --c-amber-800: 146 64 14;
+
+  --c-accent: 176 128 58;
+  --c-accent-dark: 133 93 33;
+  --c-accent-light: 244 231 205;
+
+  /* Marca (padrão navy — sobrescrito em runtime) */
+  --c-brand: 27 42 75;
+  --c-brand-dark: 20 32 56;
+  --c-brand-soft: 232 234 240;
+  --c-brand-ink: 27 42 75;
+  --c-brand-contrast: 255 255 255;
+
+  --c-status-confirmed: 21 128 61;
+  --c-status-confirmed-bg: 220 252 231;
+  --c-status-pending: 138 101 8;
+  --c-status-pending-bg: 250 240 200;
+  --c-status-seated: 29 78 216;
+  --c-status-seated-bg: 219 234 254;
+  --c-status-completed: 71 85 105;
+  --c-status-completed-bg: 236 240 245;
+  --c-status-no-show: 185 28 28;
+  --c-status-no-show-bg: 254 236 236;
+  --c-status-cancelled: 116 109 101;
+  --c-status-cancelled-bg: 241 237 230;
+  --c-status-late: 194 65 12;
+  --c-status-late-bg: 255 237 213;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  @apply bg-stone-50 text-stone-900;
+}
+
+/* Foco visível e consistente pra quem navega por teclado. */
+:focus-visible {
+  outline: 2px solid rgb(var(--c-brand));
+  outline-offset: 2px;
+}
+
+/* Impede que o iOS dê zoom ao focar campos: fonte mínima de 16px nos controles no celular. */
+@media (max-width: 639px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
