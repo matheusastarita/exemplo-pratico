@@ -46,12 +46,20 @@ function extractMessage(error: unknown): string {
   return String(error);
 }
 
-export function friendlyErrorMessage(error: unknown): string {
+/** Mensagens do painel da equipe: o mesmo erro do banco, explicado no contexto de mesa. */
+export const STAFF_ERROR_MESSAGES: Record<string, string> = {
+  slot_taken: "Essa mesa tem outra reserva nesse horário. Escolha outra mesa.",
+  no_table: "Não há mesa livre para esse grupo nesse horário. Escolha as mesas manualmente ou coloque na fila.",
+  not_found: "Essa reserva não existe mais (pode ter sido alterada em outro aparelho).",
+};
+
+export function friendlyErrorMessage(error: unknown, overrides?: Record<string, string>): string {
   const raw = extractMessage(error);
+  const messages = overrides ? { ...ERROR_MESSAGES, ...overrides } : ERROR_MESSAGES;
   // Chave exata primeiro (evita "not_found" casar dentro de outra chave).
-  if (ERROR_MESSAGES[raw]) return ERROR_MESSAGES[raw];
-  for (const key of Object.keys(ERROR_MESSAGES)) {
-    if (raw.includes(key)) return ERROR_MESSAGES[key];
+  if (messages[raw]) return messages[raw];
+  for (const key of Object.keys(messages)) {
+    if (raw.includes(key)) return messages[key];
   }
   if (/fetch|network|Failed to fetch/i.test(raw)) {
     return "Sem conexão com o servidor. Verifique sua internet e tente de novo.";
